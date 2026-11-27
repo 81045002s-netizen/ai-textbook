@@ -2,6 +2,10 @@
 
 依《03_網站架構/AI教科書網站架構_專案報告.docx》實作。原始檔一律未修改。
 
+## 文件
+- [docs/AI教科書網站架構_專案報告.docx](docs/AI教科書網站架構_專案報告.docx)：網站架構與決策（本網站依此實作）。
+- [docs/干涉與繞射_教材文本_原文照錄版_v2.docx](docs/干涉與繞射_教材文本_原文照錄版_v2.docx)：教材文本正式版；網站各節「教材文本」區塊即照錄此檔（內容檔 `units/interference-diffraction/text.yaml`）。
+
 ## 開啟
 - 學生版：`dist/student/index.html`（可公開，不含答案、規準、教師指引）
 - 教師版：`dist/teacher/index.html`（請勿公開；含答案、三級規準、迷思速查、教案、雙向細目表、投影模式、匯入批改）
