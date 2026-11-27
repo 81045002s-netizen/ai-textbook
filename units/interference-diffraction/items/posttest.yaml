@@ -1,0 +1,21 @@
+# 來源：06「後測」表（原文照錄）；實際題目待補。
+id: posttest
+title: "後測"
+pending_items: true
+info:
+  - {label: "科目與評量", value: "高中物理／高一；評量：干涉與繞射後測。"}
+  - {label: "評量範圍", value: "完整三節單元；完成三節課教學後施測。"}
+  - {label: "時間與總量", value: "25～30分鐘；共14題；總分30分。"}
+declared: {items: 14, points: 30}
+rows:
+  - {objective: "運用疊加並說明通過後狀態", levels: {了解: [1], 應用: [2, 7], 分析: [10]}, points: 7}
+  - {objective: "判讀同調條件與水波干涉", levels: {了解: [4], 應用: [8]}, points: 3}
+  - {objective: "說明雙狹縫相干次波源", levels: {了解: [5]}, points: 1}
+  - {objective: "區分瞬時位移與振幅", levels: {了解: [3]}, points: 1}
+  - {objective: "比較單雙縫圖樣與次波源分布", levels: {了解: [9, 12], 分析: [13]}, points: 9}
+  - {objective: "解釋薄膜反射光與色彩", levels: {應用: [11]}, points: 3}
+  - {objective: "評析波動證據與模型界限", levels: {評鑑: [14]}, points: 5}
+  - {objective: "查核AI回饋的證據來源", levels: {評鑑: [6]}, points: 1}
+notes:
+  - "題目來源：干涉與繞射後測及教師附錄；六層次依題幹與評分要求判定，供教師覆核。"
+  - "核對：14題／30分，無重複遺漏。各列占分比進位後合計99.9%，原始比例100%。"

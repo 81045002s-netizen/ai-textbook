@@ -1,0 +1,22 @@
+# 來源：06_自然科領域_評量雙向細目表_干涉與繞射示範版.docx「前測」表（原文照錄）
+# 06 只有藍圖；實際題目待補。每題標籤（學習目標、認知層次）由下列 rows 產生；配分依 06 各列合計。
+id: pretest
+title: "前測"
+pending_items: true
+info:
+  - {label: "科目與評量", value: "高中物理／高一；評量：干涉與繞射前測。"}
+  - {label: "評量範圍", value: "完整三節單元；教學前診斷初始理解，不列平時成績。"}
+  - {label: "時間與總量", value: "25～30分鐘；共14題；總分30分。"}
+declared: {items: 14, points: 30}
+rows:
+  - {objective: "運用疊加並說明通過後狀態", levels: {了解: [1], 應用: [2, 7], 分析: [10]}, points: 7}
+  - {objective: "解釋同調與穩定水波干涉", levels: {了解: [4]}, points: 1}
+  - {objective: "判讀振幅與位移時間紀錄", levels: {了解: [3, 8]}, points: 3}
+  - {objective: "解釋雙狹縫次波與亮暗分布", levels: {了解: [5], 應用: [14]}, points: 6}
+  - {objective: "判讀屏幕資料並比較預測", levels: {了解: [12], 分析: [13]}, points: 7}
+  - {objective: "以繞射觀察評估直進模型", levels: {評鑑: [9]}, points: 2}
+  - {objective: "辨認薄膜的兩路反射光", levels: {應用: [11]}, points: 3}
+  - {objective: "查核AI回饋的證據來源", levels: {評鑑: [6]}, points: 1}
+notes:
+  - "題目來源：干涉與繞射前測及教師附錄；六層次依題幹與評分要求判定，供教師覆核。"
+  - "核對：14題／30分，無重複遺漏。各列占分比進位後合計99.9%，原始比例100%。"

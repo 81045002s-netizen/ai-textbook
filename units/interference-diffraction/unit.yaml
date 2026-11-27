@@ -1,0 +1,10 @@
+# 單元設定：節次與知識節點對應依 03_網站架構/AI教科書網站架構_專案報告.docx
+id: interference-diffraction
+title: "干涉與繞射"
+field: "自然科學／物理"
+grade: "高一"
+material_version: "範例v1.0／115.09.04"
+lessons:
+  - {n: 1, title: "第1節　波的疊加與水波干涉", nodes: ["01"]}
+  - {n: 2, title: "第2節　光的雙狹縫干涉", nodes: ["02"]}
+  - {n: 3, title: "第3節　光的繞射與生活應用", nodes: ["03", "04"]}

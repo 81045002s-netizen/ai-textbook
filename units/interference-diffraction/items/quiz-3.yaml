@@ -1,0 +1,21 @@
+# 來源：06「隨堂測驗第3節」表（原文照錄）；實際題目待補。
+id: quiz-3
+lesson: 3
+title: "隨堂測驗"
+pending_items: true
+info:
+  - {label: "科目與評量", value: "高中物理／高一；評量：干涉與繞射隨堂測驗第3節。"}
+  - {label: "評量範圍", value: "第3節光的繞射與生活應用；該節課後施測。"}
+  - {label: "時間與總量", value: "10～12分鐘；共7題；總分15分。"}
+declared: {items: 7, points: 15}
+rows:
+  - {objective: "指出單狹縫圖樣特徵", levels: {記憶: [1]}, points: 1}
+  - {objective: "區分兩種狹縫的次波源分布", levels: {了解: [2]}, points: 1}
+  - {objective: "說明透明薄膜色彩的成因", levels: {了解: [3]}, points: 1}
+  - {objective: "辨識單雙狹縫亮度曲線", levels: {了解: [4]}, points: 2}
+  - {objective: "評估直進模型的解釋限制", levels: {評鑑: [5]}, points: 4}
+  - {objective: "以反射光相位判斷波長強弱", levels: {應用: [6]}, points: 3}
+  - {objective: "評析只用折射解釋色彩的不足", levels: {評鑑: [7]}, points: 3}
+notes:
+  - "題目來源：干涉與繞射隨堂測驗第3節及教師附錄；六層次依題幹與評分要求判定，供教師覆核。"
+  - "本節7題／15分；三節共21題／45分。各列占分比進位後合計100.1%，原始比例100%。"

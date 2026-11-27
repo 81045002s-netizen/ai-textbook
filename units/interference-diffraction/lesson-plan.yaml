@@ -1,0 +1,216 @@
+# 來源：02_已填寫參考範例/02_單元教案與教學指引_示範版.docx（原文照錄）
+# steps：節次頁的步驟結構，依 03_網站架構/AI教科書網站架構_專案報告.docx「節次頁面設計」。
+# 步驟名稱與時間為架構報告的編排；各區塊內文字取自 01–10 原文。
+source_file: "02_單元教案與教學指引_示範版.docx"
+
+basic:   # 一　基本資料（教師版）
+  teacher:
+    - {label: "單元名稱", value: "干涉與繞射"}
+    - {label: "設計者／學校", value: "江長屹/台師大科教所"}
+    - {label: "領域／科目", value: "自然科學／物理"}
+    - {label: "適用對象", value: "高一"}
+    - {label: "節數／時間", value: "3節；每節50分鐘"}
+    - {label: "版本／日期", value: "範例v1.0／115.09.04"}
+    - {label: "教材檔案", value: "三節學習單修訂版、離線教材、教師投影、13頁教科書及評量。"}
+    - {label: "實施條件", value: "一般教室；兩人一機、個別作答。AI與實體示範選用。"}
+
+design:  # 二　教學設計依據
+  - {label: "設計理念", value: "先預測，再觀察，以證據修正解釋；由水波類比遷移至光。"}
+  - {label: "核心問題", value: "直進模型能解釋狹縫後的亮暗分布嗎？波的疊加如何解釋？", student: true}
+  - {label: "核心理解", value: "波在同處疊加可增強或減弱。光的干涉與繞射支持波動描述。", student: true}
+  - {label: "學生起點", value: "已學直進、反射、折射與波的基本量；以前測辨識碰撞、相消等迷思。"}
+  - {label: "範圍與限制", value: "定性說明；不推公式或掃描參數。水波是類比，光學觀察才是光的證據。"}
+  - {label: "學習表現", value: "tr-Ⅴc-1：證據與因果\ntm-Ⅴc-1：模型及限制\npc-Ⅴc-2：表達與討論"}
+  - {label: "學習內容", value: "PKa-Ⅴc-3：光的理論\nPKa-Ⅴc-5：干涉與繞射\nPKa-Ⅴc-6：惠更斯原理"}
+
+objectives:   # 學習目標與評量對應（學習目標學生可見；其餘教師版）
+  - {no: "1", goal: "以疊加解釋繩波與水波。", teacher: {evidence: "第1節學習單Q2、Q3、Q7。", criteria: "位移及振幅判讀正確。"}}
+  - {no: "2", goal: "解釋雙狹縫亮暗紋。", teacher: {evidence: "第2節學習單Q2、Q4–Q6。", criteria: "以電場疊加解釋亮暗。"}}
+  - {no: "3", goal: "比較干涉、繞射與薄膜反射。", teacher: {evidence: "第3節學習單Q1、Q3。", criteria: "辨識繞射及薄膜反射光。"}}
+  - {no: "4", goal: "引用光學證據完成論證，\n查核回饋並修訂。", teacher: {evidence: "第3節學習單Q5。", criteria: "證據可回查、推理相連；\n說明波動模型的界限。"}}
+
+path: "繩波疊加 → 水波干涉 → 雙狹縫 → 單狹縫與薄膜 → 波動性論證。"
+
+overview_rows:   # 課次總覽
+  - {n: 1, function: "建立規則", question: "波如何疊加？", material: "繩波、水波", output: "波形、選點、CER", time: "50分"}
+  - {n: 2, function: "遷移至光", question: "亮暗紋如何形成？", material: "雙狹縫", output: "屏幕圖、光CER", time: "50分"}
+  - {n: 3, function: "應用統整", question: "何以支持波動性？", material: "繞射、薄膜", output: "比較、統整與反思", time: "50分"}
+
+teacher:
+  prep:
+    - {label: "教學準備", value: "兩人一機、每人一份學習單；教師備投影、實拍與離線版，課前試播。"}
+    - {label: "工具與AI", value: "AI僅追問：預測不揭答案、觀察不解釋，解釋階段才查核證據；不代答。"}
+    - {label: "替代方案", value: "無設備用紙本圖卡與備援頁，仍先預測再揭圖；AI未啟用時由教師追問。"}
+  assessment:
+    - {when: "單元開始", task: "課前前測：疊加、初始光模型\n與證據來源。", criteria: "辨識先備概念\n與主要迷思。", where: "前測卷"}
+    - {when: "學習過程", task: "預測圖、觀察、三段CER\n與同儕修訂。", criteria: "主張明確、證據可查，\n推理連到物理原理。", where: "學習單、平台紀錄"}
+    - {when: "新情境應用", task: "辨認薄膜的兩路反射光；\n比較光碟與薄膜的機制。", criteria: "辨認干涉來源；\n不混淆薄膜與光碟。", where: "第3節Q3、平台紀錄"}
+    - {when: "單元結束", task: "第3節Q5；課後另施後測。", criteria: "證據支持波動性；\n能說明模型限制。", where: "學習單、後測卷"}
+  digital_record: "以學生代碼作答；課末下載JSON，另可匯出CSV／HTML。教師收存回答、畫圖與操作紀錄。"
+  attachments:
+    - {no: "1", name: "修訂版學習單\n13頁紙本教科書", use: "三節作答與概念整理", license: "自製；照片另註來源。"}
+    - {no: "2", name: "三節離線版\n投影與備援頁", use: "模擬、揭圖與備援", license: "自製；照片依原授權。"}
+    - {no: "3", name: "前後測與隨堂測驗\nAI引導規範", use: "評量與AI回應界線", license: "本教材自製。"}
+    - {no: "4", name: "雙狹縫、繞射\n與薄膜實拍", use: "真實觀察與來源查核", license: "各作者、授權見清單。"}
+  delivery_check_intro: "課前確認："
+  delivery_check: ["題號與版本一致", "實拍來源可查", "離線與備援可開啟", "時間可行", "AI回應符合階段", "選用實驗已完成安全檢查"]
+
+lessons:
+  - n: 1
+    title: "第1節　波的疊加與水波干涉"
+    minutes: "50分鐘"
+    nodes: ["01"]
+    teacher:
+      bridge: "以繩波建立疊加規則，再解釋水波干涉；對應目標1、4。"
+      outputs: "第1節學習單Q1–Q8、離線版與投影；留存波形圖、選點與兩段CER。"
+      rows:
+        - {time: "0-22分", teacher: "先畫脈衝，再看重疊與通過。\n問：相消後波消失嗎？", student: "Q1預測、Q2畫圖；\nQ3用疊加解釋。", evidence: "位移相加；\n通過後仍傳播。", note: "繩波模擬\nQ1–Q3"}
+        - {time: "22-42分", teacher: "先預測A、B，再看一週期。\n問：亮處一定是腹線嗎？", student: "Q4預測；Q5選點；\nQ6比較結果。", evidence: "依一段時間的\n振幅判讀。", note: "3D及俯視\nQ4–Q6"}
+        - {time: "42-50分", teacher: "命名腹線、節線，再反思。\n問：哪項觀察讓你改變？", student: "Q7寫水波CER；\nQ8寫想法改變。", evidence: "觀察支持解釋；\n指出修訂理由。", note: "Q7–Q8\n下載紀錄"}
+      expert: "同處、同時的位移作代數相加；同調波源形成穩定的振幅強弱分布。"
+      caveats: "適用理想線性介質。相消不等於能量消失；單張亮暗不能判定振幅。"
+    steps:
+      - name: "預測"
+        time: "0–22 分前段"
+        plan_row: 0
+        blocks:
+          - {type: assets, ids: [L1-rope-before]}
+          - {type: q, ids: [Q1]}
+          - {type: hint, ids: [m-bounce]}
+      - name: "觀察"
+        time: "0–22 分後段"
+        plan_row: 0
+        blocks:
+          - {type: text, node: "01", paras: [0]}
+          - {type: assets, ids: [SIM-superpose, SIM-superpose-07B, L1-rope-compare, ANIM-07B]}
+          - {type: q, ids: [Q2, Q3]}
+          - {type: hint, ids: [m-bounce]}
+      - name: "觀察／解釋"
+        time: "22–42 分"
+        plan_row: 1
+        blocks:
+          - {type: q, ids: [Q4]}
+          - {type: text, node: "01", paras: [1, 2, 3]}
+          - {type: assets, ids: [SIM-water, L1-water-3d, L1-ab]}
+          - {type: q, ids: [Q5, Q6]}
+          - {type: hint, ids: [m-amplitude]}
+          - {type: core, ids: [1, 2]}
+      - name: "統整"
+        time: "42–50 分"
+        plan_row: 2
+        blocks:
+          - {type: pending, what: "教材文本：腹線、節線命名"}
+          - {type: conditions, node: "01"}
+          - {type: q, ids: [Q7, Q8]}
+          - {type: download}
+  - n: 2
+    title: "第2節　光的雙狹縫干涉"
+    minutes: "50分鐘"
+    nodes: ["02"]
+    teacher:
+      bridge: "修訂水波CER，轉向光學觀察；對應目標2、4。"
+      outputs: "第2節學習單Q1–Q6、離線版、教師投影及紅光雙狹縫實拍。"
+      rows:
+        - {time: "0-8分", teacher: "呈現匿名水波CER。\n問：哪項觀察支持腹線、節線？", student: "檢查證據與推理，\n修訂第1節Q7。", evidence: "修訂有明確\n證據與理由。", note: "水波CER\n修訂前後稿"}
+        - {time: "8-15分", teacher: "只呈現裝置，不揭圖樣。\n問：依直進模型會看到什麼？", student: "完成Q1：畫完整\n屏幕並寫理由。", evidence: "保留個別預測，\n不只畫狹縫。", note: "Q1\n提交後揭圖"}
+        - {time: "15-32分", teacher: "先看實拍，再用模擬比較。\n問：哪個特徵需要修正？", student: "Q2記錄來源與特徵；\nQ3比較預測。", evidence: "指出多條明暗紋；\n如實標示來源。", note: "實拍、模擬\nQ2–Q3"}
+        - {time: "32-45分", teacher: "用惠更斯原理解釋B亮、D暗。\n問：暗處真的沒有光到達嗎？", student: "辨認相位與干涉，\n完成Q4。", evidence: "相位關係連到\n電場疊加及光強。", note: "次波模型\nQ4"}
+        - {time: "45-50分", teacher: "問：水波位移與屏幕亮暗相同嗎？\n檢查CER的證據與推理。", student: "Q5比較水波與光；\nQ6完成光CER。", evidence: "引用屏幕觀察；\n寫出類比限制。", note: "Q5–Q6\n下載紀錄"}
+      expert: "惠更斯原理：波面各點可視為次波源，次波包絡形成新波面。兩狹縫受同一入射波驅動，形成同調次波源；電場疊加造成亮暗。"
+      caveats: "屏幕顯示時間平均光強；模型波面不是可見光路。暗紋不等於沒有光到達。若選用雷射示範，由教師固定光路，避開眼睛與鏡面；調整前關閉光源。"
+    steps:
+      - name: "修訂"
+        time: "0–8 分"
+        plan_row: 0
+        blocks:
+          - {type: teacher_note, text: "呈現匿名水波CER。"}
+          - {type: q, ids: [R1]}
+      - name: "預測"
+        time: "8–15 分"
+        plan_row: 1
+        blocks:
+          - {type: activity, id: act01}
+          - {type: assets, ids: [L2-predict, L2-setup-svg]}
+          - {type: q, ids: [Q1]}
+          - {type: teacher_hint, q: Q1}
+          - {type: core, ids: [3]}
+      - name: "觀察"
+        time: "15–32 分"
+        plan_row: 2
+        blocks:
+          - {type: activity, id: act02}
+          - {type: text, node: "02", paras: [0]}
+          - {type: assets, ids: [L2-redphoto, L2-bench, SIM-light]}
+          - {type: q, ids: [Q2, Q3]}
+          - {type: hint, ids: [m-model-photo]}
+      - name: "解釋"
+        time: "32–45 分"
+        plan_row: 3
+        blocks:
+          - {type: activity, id: act03}
+          - {type: text, node: "02", paras: [1, 2, 3]}
+          - {type: assets, ids: [L2-huygens, L2-secondary, L2-bd]}
+          - {type: q, ids: [Q4]}
+          - {type: hint, ids: [m-dark], ai: true}
+          - {type: core, ids: [4]}
+      - name: "統整"
+        time: "45–50 分"
+        plan_row: 4
+        blocks:
+          - {type: activity, id: act04}
+          - {type: pending, what: "教材文本：水波與光的比較"}
+          - {type: conditions, node: "02"}
+          - {type: review, lesson: 1}
+          - {type: q, ids: [Q5, Q6]}
+          - {type: download}
+  - n: 3
+    title: "第3節　光的繞射與生活應用"
+    minutes: "50分鐘"
+    nodes: ["03", "04"]
+    teacher:
+      bridge: "承接光CER，比較繞射、說明薄膜並統整波動性；對應目標3、4。"
+      outputs: "第3節學習單Q1、Q3、Q5、離線版與投影；單狹縫及薄膜實拍。"
+      rows:
+        - {time: "0-8分", teacher: "呈現匿名後台回答紀錄。\n問：哪句把模型當成實驗證據？", student: "修訂第2節Q6，\n補上證據或推理。", evidence: "區分光學實拍、\n水波類比與模型。", note: "光CER\n修訂前後稿"}
+        - {time: "8-18分", teacher: "先比實拍，再比次波源分布。\n問：中央與兩側亮紋有何差別？", student: "完成Q1；口頭比較\n單、雙狹縫。", evidence: "中央較寬較亮；\n兩側漸弱。", note: "單狹縫實拍\nQ1"}
+        - {time: "18-28分", teacher: "展示薄膜照片與剖面。\n問：哪兩束反射光會重疊？", student: "Q3指出上下表面的\n反射光及干涉。", evidence: "兩路反射光正確；\n不只歸因折射。", note: "薄膜示意\nQ3"}
+        - {time: "28-45分", teacher: "回看雙狹縫與單狹縫實拍。\n問：直進模型漏掉了什麼？", student: "Q5①連結觀察、\n次波疊加與波動性。", evidence: "用兩項光學觀察\n支持波動描述。", note: "兩種屏幕圖\nQ5①"}
+        - {time: "45-50分", teacher: "問：哪項證據改變你的想法？\n提醒保存修訂及AI採納理由。", student: "Q5②寫前後想法；\n下載完整紀錄。", evidence: "反思具體；若用AI，\n說明採納或拒絕。", note: "Q5②\n下載紀錄"}
+      expert: "干涉與繞射皆由次波疊加理解：雙狹縫可近似為兩個分立次波源，單狹縫為連續分布的次波源。薄膜上下表面的反射光重疊，形成干涉。"
+      caveats: "只作定性說明，不算膜厚或特定顏色。光碟色彩不能一律歸為薄膜干涉；干涉與繞射支持波動行為，不能據此說明光的全部性質。"
+    steps:
+      - name: "修訂"
+        time: "0–8 分"
+        plan_row: 0
+        blocks:
+          - {type: teacher_note, text: "呈現匿名後台回答紀錄。"}
+          - {type: q, ids: [R2]}
+      - name: "觀察／解釋"
+        time: "8–18 分"
+        plan_row: 1
+        blocks:
+          - {type: text, node: "03", paras: [0, 1, 2, 3]}
+          - {type: conditions, node: "03"}
+          - {type: assets, ids: [L3-bluephoto, L3-ideal, L3-adjslit, L3-sources]}
+          - {type: q, ids: [Q1]}
+          - {type: hint, ids: [m-unrelated]}
+          - {type: core, ids: [5]}
+      - name: "應用"
+        time: "18–28 分"
+        plan_row: 2
+        blocks:
+          - {type: text, node: "04", paras: [0, 1, 2]}
+          - {type: assets, ids: [L3-film-section, L3-oil, L3-soapbubble, L3-soapfilm, SIM-film, L3-ar-lens]}
+          - {type: q, ids: [Q3]}
+          - {type: core, ids: [6]}
+      - name: "統整"
+        time: "28–50 分"
+        plan_row: [3, 4]
+        blocks:
+          - {type: text, node: "04", paras: [3]}
+          - {type: conditions, node: "04"}
+          - {type: assets, ids: [L2-redphoto, L3-bluephoto]}
+          - {type: assets, ids: [L3-life, L3-cd, L3-peacock, L3-morpho, L3-hubble, L3-newton], note: "結構色可能涉及干涉、繞射與散射；延伸照片依個別機制說明。"}
+          - {type: q, ids: [Q5a, Q5b]}
+          - {type: core, ids: [7]}
+          - {type: download}

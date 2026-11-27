@@ -1,0 +1,13 @@
+# 第1節學習單：03 只示範第2節，第1節完整題目待補。
+# 題號與作答任務照 02_單元教案與教學指引_示範版.docx 第1節原文（plan_ref）。
+lesson: 1
+pending: true
+questions:
+  - {id: Q1, label: "Q1", plan_ref: "Q1預測", lock: true, parts: [{id: x, type: text, lines: 3}]}
+  - {id: Q2, label: "Q2", plan_ref: "Q2畫圖", parts: [{id: d, type: draw}, {id: x, type: text, lines: 2}]}
+  - {id: Q3, label: "Q3", plan_ref: "Q3用疊加解釋。", parts: [{id: x, type: text, lines: 3}]}
+  - {id: Q4, label: "Q4", plan_ref: "Q4預測", lock: true, parts: [{id: x, type: text, lines: 3}]}
+  - {id: Q5, label: "Q5", plan_ref: "Q5選點", parts: [{id: x, type: text, lines: 2}]}
+  - {id: Q6, label: "Q6", plan_ref: "Q6比較結果。", parts: [{id: x, type: text, lines: 3}]}
+  - {id: Q7, label: "Q7", plan_ref: "Q7寫水波CER", parts: [{id: x, type: text, lines: 5}]}
+  - {id: Q8, label: "Q8", plan_ref: "Q8寫想法改變。", parts: [{id: x, type: text, lines: 3}]}

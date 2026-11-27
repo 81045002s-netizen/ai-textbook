@@ -1,0 +1,29 @@
+# 來源：02_已填寫參考範例/04_延伸學習資源教材公版_示範版.docx（原文照錄）
+heading: "高一定性理解 → 高中量化 → 大一波動光學。"
+basic:
+  - {label: "領域／科目", value: "自然科學／物理"}
+  - {label: "單元名稱", value: "干涉與繞射"}
+  - {label: "目前年段", value: "高一"}
+  - {label: "授課節數", value: "3節，每節50分鐘"}
+  - {label: "核心概念", value: "以波的疊加解釋干涉與繞射，並用光學觀察支持波動模型。"}
+stages_header: ["規劃面向", "目前單元", "第一進階年段", "第二進階年段"]
+stages:
+  - ["年級／階段", "高一", "高中進階物理", "大一普通物理"]
+  - ["學習主題", "波疊加、水波干涉、\n雙狹縫與繞射。", "雙狹縫、單狹縫、\n光柵與薄膜量化。", "相量、解析度、\n干涉量測與影像分析。"]
+  - ["理解／能力", "解釋亮暗分布；\n區分觀察與模型，\n以證據修訂解釋。", "由路程差求條紋位置；\n估算波長、縫寬\n與膜厚。", "比較強度與可見度；\n估算解析度，\n以條紋量測位移。"]
+  - ["內容範圍", "定性比較干涉、繞射\n與薄膜；不推導公式。", "先學條紋位置與近似；\n再學薄膜反射相位，\n暫不求完整強度分布。", "相量、多縫、牛頓環\n與量測；不做微積分\n推導或完整成像模型。"]
+  - ["表徵與工具", "波形圖、實拍與模擬；\n先預測、再觀察解釋。", "幾何圖、三角函數、\n小角度近似與直尺。", "相量圖、強度曲線、\n試算表擬合與殘差。"]
+  - ["必要先備", "波長、振幅、直進、\n反射與折射。", "疊加、相位、三角比、\n比例與單位換算。", "高中干涉繞射公式、\n向量、三角函數與\n基礎誤差概念。"]
+resources_intro: "各階段選列3項；點選來源可開啟原教材或網頁。"
+resource_header: ["序", "資源名稱／主題", "內容摘要", "網址／來源", "用途／先備"]
+groups:
+  - title: "第一進階年段　高中量化"
+    items:
+      - {no: "1", name: "原延伸教材\n第1至4章", summary: "建立條紋位置、光柵\n與薄膜的量化模型。", source: "高三選修物理教材", use: "閱讀／練習\n先備：三角比、\n疊加概念"}
+      - {no: "2", name: "薄膜干涉", summary: "以泡膜、油膜連結\n光程差與反射相位。", source: "陽明交大光電系", links: [{text: "閱讀網頁", url: "https://dop.nycu.edu.tw/ch/page.html?tID=260"}], use: "補充閱讀\n先備：折射、\n相位概念"}
+      - {no: "3", name: "極光巧克力\n炫目登場", summary: "由微細紋理與光碟\n虹彩，認識光柵應用。", source: "臺灣網路科教館\n江淑芳、陳坤龍", links: [{text: "閱讀網頁", url: "https://www.ntsec.edu.tw/liveSupply/detail.aspx?a=6829&cat=6843&lid=19944&p=1&print=1"}], use: "閱讀／觀察\n先備：繞射、\n光柵概念"}
+  - title: "第二進階年段　大一波動光學"
+    items:
+      - {no: "1", name: "University\nPhysics Vol. 3", summary: "選讀第3章與第4章\n4.1至4.5節，補強\n強度與解析度。", source: "OpenStax", links: [{text: "第3章", url: "https://openstax.org/books/university-physics-volume-3/pages/3-introduction"}, {text: "第4章", url: "https://openstax.org/books/university-physics-volume-3/pages/4-introduction"}], use: "自主選讀\n先備：三角函數\n及英文閱讀"}
+      - {no: "2", name: "偵測重力波的\n關鍵技術", summary: "認識精密反射鏡鍍膜\n如何提升重力波\n探測器的靈敏度。", source: "國立自然科學\n博物館", links: [{text: "閱讀網頁", url: "https://web3.nmns.edu.tw/Exhibits/112/the-gravity-realm/unit-4.html"}], use: "應用閱讀\n先備：薄膜、\n干涉儀概念"}
+footer: "高一先用現象圖；高中量化及大一內容依學生先備選讀。"

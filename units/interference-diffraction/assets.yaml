@@ -1,0 +1,103 @@
+# 來源：02_已填寫參考範例/07A_多模態輔助教材素材清單_範例版.docx（原文照錄）
+# kind：架構報告規定的「實拍／模型／示意」標籤（依 07A 類型欄歸類）。
+# commons：Wikimedia Commons 檔名（取自 07A 來源頁網址），網站以 Special:FilePath 連結原圖；無法連線時顯示佔位卡。
+# 本教材自製的圖片與模擬檔不在專案資料夾，status: missing → 佔位。
+# teacher: 底下（用途、使用需求）只輸出到教師版。
+basic: "高中物理／干涉與繞射／第1–3節；素材資料依原清單（2026-09-02）整理。"
+intro: "依原清單精簡欄位，保留既有素材編號、檔案位置、教學用途與來源；本表不含需求腳本及公版。"
+groups:
+  - {id: sim, title: "互動模擬", note: "共通需求：可嵌入平台或另頁開啟；完全離線需先處理外部套件。原HTML未含AI回饋與操作紀錄；可用關鍵畫面作備援。"}
+  - {id: g1, title: "圖片素材 封面與第1節", note: "檔案位置以「圖片與照片/」為起點。封面用於開場；繩波與水波圖為模型、示意或題圖，與真實觀察區分。"}
+  - {id: g2, title: "圖片素材 第2節", note: "檔案位置以「圖片與照片/第2節/」為起點。先呈現雙狹縫實拍，再用波前、次波源與亮暗模型解釋。"}
+  - {id: g3a, title: "圖片素材 第3節 上", note: "檔案位置以「圖片與照片/第3節/」為起點。單狹縫實拍與理想圖分列；光碟歸入週期結構繞射，油膜與肥皂膜歸入薄膜干涉。"}
+  - {id: g3b, title: "圖片素材 第3節 下", note: "檔案位置以「圖片與照片/第3節/」為起點。結構色可能涉及干涉、繞射與散射；延伸照片依個別機制說明。"}
+  - {id: s07b, struct_title: "07B 需求腳本規劃素材", note: "每張圖片填一份；可用文字、手繪或貼圖表達；大型草圖填於下一頁。本例為製作需求，尺寸與數值為示範設定。"}
+
+assets:
+  # ---- 互動模擬 ----
+  - {id: SIM-superpose, group: sim, type: "模擬", kind: 模型, lessons: [1], file: "波的疊加拷貝.html", status: missing, license: "本教材自製HTML／Canvas。",
+     teacher: {use: "第1節：同一位置、同一時刻的位移代數和。先預測再操作，觀察重疊及通過後狀態。可調脈衝高度、寬度與位置。", needs: "瀏覽器Canvas；Tailwind需網路。"}}
+  - {id: SIM-water, group: sim, type: "模擬", kind: 模型, lessons: [1], file: "水波的干涉繞射拷貝.html", status: missing, license: "本教材整合既有模擬。",
+     teacher: {use: "第1節：雙波源干涉與節線、腹線。可調波源距離、振幅、頻率及速度；法拉第波僅作延伸。", needs: "WebGL；Three.js、OrbitControls需網路；音效需授權。"}}
+  - {id: SIM-light, group: sim, type: "模擬", kind: 模型, lessons: [2], file: "光的干涉拷貝.html", status: missing, license: "本教材自製HTML／Canvas。",
+     teacher: {use: "第2節：在實拍證據後解釋雙狹縫條紋；調整波長、縫距與屏距，比較亮暗位置。可切換單色／白光。", needs: "Canvas；Tailwind、MathJax、字型需網路。"}}
+  - {id: SIM-film, group: sim, type: "模擬", kind: 模型, lessons: [3], file: "薄膜干涉拷貝.html", status: missing, license: "本教材自製HTML／Canvas。",
+     teacher: {use: "第3節：薄膜上下界面的兩路反射光與增強／減弱；可調波長及膜厚，數值與相位差作延伸。", needs: "Canvas；Tailwind需網路。"}}
+  # ---- 封面與第1節 ----
+  - {id: COVER-print, group: g1, type: "封面／版面", kind: 示意, lessons: [], file: "封面/封面_紙本13頁.png", status: missing, license: "本教材版面輸出", teacher: {use: "紙本教材封面；不作概念證據。"}}
+  - {id: COVER-visual, group: g1, type: "封面主視覺", kind: 示意, lessons: [], file: "封面/干涉與繞射_封面主視覺.png", status: missing, license: "本教材自製視覺", teacher: {use: "封面、章首頁或投影片開場。"}}
+  - {id: L1-water-3d, group: g1, type: "模擬截圖", kind: 模型, lessons: [1], file: "第1節/水波干涉_3D關鍵畫面.png", status: missing, license: "本教材模擬截圖；詳見第1節原創聲明", teacher: {use: "第1節觀察與解釋；模型畫面，非真實水槽證據。"}}
+  - {id: L1-rope-compare, group: g1, type: "概念比較圖", kind: 示意, lessons: [1], file: "第1節/繩波_兩種完全重疊比較.png", status: missing, license: "本教材自製", teacher: {use: "第1節疊加原理說明與學生修訂預測。"}}
+  - {id: L1-rope-before, group: g1, type: "題圖", kind: 示意, lessons: [1], file: "第1節/繩波相遇前_自製題圖.png", status: missing, license: "本教材自製", teacher: {use: "第1節預測；讓學生先畫完全重疊與通過後狀態。"}}
+  - {id: L1-ab, group: g1, type: "題圖", kind: 示意, lessons: [1], file: "第1節/雙點波源AB點_自製題圖.png", status: missing, license: "本教材自製", teacher: {use: "第1節比較不同位置一段時間內的振幅與節／腹判斷。"}}
+  # ---- 第2節 ----
+  - {id: L2-huygens, group: g2, type: "概念圖解", kind: 模型, lessons: [2], file: "惠更斯原理_示意圖解說.png", status: missing, license: "本教材自製", teacher: {use: "第2節解釋；連結狹縫與次波源模型。"}}
+  - {id: L2-bench, group: g2, type: "器材照片", kind: 實拍, lessons: [2], file: "真實實驗照片/光凳器材組_Waifer-X_Cuesta-College_CC-BY-2.0.jpg",
+     license: "Waifer X／Cuesta College｜CC BY 2.0", source_url: "https://commons.wikimedia.org/wiki/File:Optical_Bench_educational_Kit_-_Cuesta_College.jpg", commons: "Optical_Bench_educational_Kit_-_Cuesta_College.jpg",
+     teacher: {use: "第2節實驗前器材辨認；不宣稱照片為本次實驗組。"}}
+  - {id: L2-setup-photo, group: g2, type: "架設照片", kind: 實拍, lessons: [2], file: "真實實驗照片/光凳實際架設_Cantons-de-lEst_CC-BY-SA-4.0.jpg",
+     license: "Cantons-de-l'Est｜CC BY-SA 4.0", source_url: "https://commons.wikimedia.org/wiki/File:Banc_optique_-_exemple_de_montage_01.jpg", commons: "Banc_optique_-_exemple_de_montage_01.jpg",
+     teacher: {use: "第2節實驗前建立空間配置概念。"}}
+  - {id: L2-redphoto, group: g2, type: "實拍", kind: 實拍, lessons: [2, 3], file: "真實實驗照片/雙狹縫干涉_紅光實拍_Bryan-Tong-Minh_PD.jpg",
+     license: "Bryan Tong Minh｜Public Domain", source_url: "https://commons.wikimedia.org/wiki/File:Subwavelength_slits.JPG", commons: "Subwavelength_slits.JPG",
+     teacher: {use: "632.8 nm紅光雙狹縫實拍。第2節觀察主要證據；先於理想模型呈現。"}}
+  - {id: L2-huygens-print, group: g2, type: "紙本衍生圖", kind: 模型, lessons: [], file: "紙本教材用/惠更斯原理_關鍵畫面.png", status: missing, license: "本教材自製圖之紙本輸出", teacher: {use: "紙本教材定格說明；與原示意圖概念一致。"}}
+  - {id: L2-bd, group: g2, type: "紙本模型圖", kind: 模型, lessons: [2], file: "紙本教材用/雙狹縫_亮暗條紋_BD.png", status: missing, license: "本教材自製理想模型", teacher: {use: "第2節解釋；說明同相／反相到達與亮暗位置。"}}
+  - {id: L2-setup-print, group: g2, type: "紙本衍生圖", kind: 示意, lessons: [], file: "紙本教材用/雙狹縫實驗架設_空間位置示意.svg.png", status: missing, license: "本教材自製SVG之輸出", teacher: {use: "紙本教材與學習單；只呈現器材位置，不畫光線路徑。"}}
+  - {id: L2-setup-svg, group: g2, type: "向量示意圖", kind: 示意, lessons: [2], file: "雙狹縫實驗架設_空間位置示意.svg", status: missing, license: "本教材自製", teacher: {use: "第2節實驗操作前說明；可無損放大。"}}
+  - {id: L2-secondary, group: g2, type: "模型題圖", kind: 模型, lessons: [2], file: "雙狹縫次波模型_自製題圖.png", status: missing, license: "本教材自製", teacher: {use: "第2節解釋與論證；要求學生區分證據與模型。"}}
+  - {id: L2-predict, group: g2, type: "預測題圖", kind: 示意, lessons: [2], file: "雙狹縫裝置_預測題圖.png", status: missing, license: "本教材自製", teacher: {use: "第2節預測；先保留直進模型的預測。"}}
+  # ---- 第3節 上 ----
+  - {id: L3-setup-svg, group: g3a, type: "向量示意圖", kind: 示意, lessons: [], file: "單狹縫實驗架設_空間位置示意.svg", status: missing, license: "本教材自製", teacher: {use: "第3節實驗或示範前說明；不畫幾何光線。"}}
+  - {id: L3-photo-doc, group: g3a, type: "實拍衍生圖", kind: 實拍, lessons: [], file: "單狹縫繞射_實拍_文件用.png", status: missing,
+     license: "Xyqorophibian｜CC BY-SA 4.0；文件用衍生版本", source_url: "https://commons.wikimedia.org/wiki/File:Blue_laser_single_slit_diffraction_photo.jpg",
+     teacher: {use: "第3節觀察主要證據；與理想圖樣並列比較。"}}
+  - {id: L3-ideal, group: g3a, type: "理想模型圖", kind: 模型, lessons: [3], file: "單狹縫繞射_理想圖樣.png", status: missing, license: "本教材自製理想模型", teacher: {use: "第3節解釋；不得取代實拍證據。"}}
+  - {id: L3-life, group: g3a, type: "生活現象組圖", kind: 實拍, lessons: [3], file: "生活中的干涉與繞射_實拍.png", status: missing, license: "依組圖各照片原授權；詳見第3節授權文件", teacher: {use: "第3節概念遷移與現象分類；機制需個別判斷。"}}
+  - {id: L3-ar-lens, group: g3a, type: "應用實拍", kind: 實拍, lessons: [3], file: "真實照片/一般鏡片與抗反射鏡片_Maximilian-Schoenherr_CC0.jpg",
+     license: "Maximilian Schönherr｜CC0", source_url: "https://commons.wikimedia.org/wiki/File:Reflective_and_anti-reflective_lens.jpg", commons: "Reflective_and_anti-reflective_lens.jpg",
+     teacher: {use: "薄膜干涉科技應用補充。"}}
+  - {id: L3-setup-photo, group: g3a, type: "架設照片", kind: 實拍, lessons: [], file: "真實照片/光凳實際架設_Cantons-de-lEst_CC-BY-SA-4.0.jpg",
+     license: "Cantons-de-l'Est｜CC BY-SA 4.0", source_url: "https://commons.wikimedia.org/wiki/File:Banc_optique_-_exemple_de_montage_01.jpg", commons: "Banc_optique_-_exemple_de_montage_01.jpg",
+     teacher: {use: "單狹縫實驗器材配置參照。"}}
+  - {id: L3-cd, group: g3a, type: "生活實拍", kind: 實拍, lessons: [3], file: "真實照片/光碟繞射_Hapecko_CC-BY-SA-4.0.jpg",
+     license: "Hapecko｜CC BY-SA 4.0", source_url: "https://commons.wikimedia.org/wiki/File:CD_rainbow.jpg", commons: "CD_rainbow.jpg",
+     teacher: {use: "第3節生活中的繞射；不歸為薄膜干涉。"}}
+  - {id: L3-adjslit, group: g3a, type: "器材照片", kind: 實拍, lessons: [3], file: "真實照片/可調式單狹縫器_Jan-Krieger_CC-BY-SA-3.0.jpg",
+     license: "Jan Krieger｜CC BY-SA 3.0", source_url: "https://commons.wikimedia.org/wiki/File:Xy_adjustable_optical_slit.jpg", commons: "Xy_adjustable_optical_slit.jpg",
+     teacher: {use: "第3節器材辨認；照片尺度不代表課堂狹縫尺度。"}}
+  - {id: L3-bluephoto, group: g3a, type: "實拍", kind: 實拍, lessons: [3], file: "真實照片/單狹縫繞射_藍光雷射_Xyqorophibian_CC-BY-SA-4.0.jpg",
+     license: "Xyqorophibian｜CC BY-SA 4.0", source_url: "https://commons.wikimedia.org/wiki/File:Blue_laser_single_slit_diffraction_photo.jpg", commons: "Blue_laser_single_slit_diffraction_photo.jpg",
+     teacher: {use: "第3節觀察主要證據。"}}
+  - {id: L3-peacock, group: g3a, type: "延伸照片", kind: 實拍, lessons: [3], file: "真實照片/教科書補充/孔雀羽毛_Bernard-Spragg_CC0.jpg",
+     license: "Bernard Spragg. NZ｜CC0", source_url: "https://commons.wikimedia.org/wiki/File:Peacock_feathers._(20779300743).jpg", commons: "Peacock_feathers._(20779300743).jpg",
+     teacher: {use: "結構色延伸；避免只以顏料或單一機制解釋。"}}
+  # ---- 第3節 下 ----
+  - {id: L3-hubble, group: g3b, type: "延伸照片", kind: 實拍, lessons: [3], file: "真實照片/教科書補充/望遠鏡繞射尖峰_ESA-Hubble_CC-BY-4.0.jpg",
+     license: "ESA/Hubble & NASA｜CC BY 4.0", source_url: "https://commons.wikimedia.org/wiki/File:A_slice_of_Sagittarius.jpg", commons: "A_slice_of_Sagittarius.jpg",
+     teacher: {use: "繞射科技情境；尖峰不是恆星真實外形。"}}
+  - {id: L3-newton, group: g3b, type: "延伸照片", kind: 實拍, lessons: [3], file: "真實照片/教科書補充/牛頓環_Ulfbastel_PD.jpg",
+     license: "Ulfbastel｜Public Domain", source_url: "https://commons.wikimedia.org/wiki/File:Newton_rings.jpg", commons: "Newton_rings.jpg",
+     teacher: {use: "薄膜干涉延伸現象。"}}
+  - {id: L3-morpho, group: g3b, type: "延伸照片", kind: 實拍, lessons: [3], file: "真實照片/教科書補充/藍閃蝶_Alias0591_CC-BY-2.0.jpg",
+     license: "Alias 0591（Rene Mensen）｜CC BY 2.0", source_url: "https://commons.wikimedia.org/wiki/File:Blue_Morpho_butterfly_(Morpho_peleides)_wings_open.jpg", commons: "Blue_Morpho_butterfly_(Morpho_peleides)_wings_open.jpg",
+     teacher: {use: "結構色延伸；可能同時涉及干涉、繞射與散射。"}}
+  - {id: L3-oil, group: g3b, type: "生活實拍", kind: 實拍, lessons: [3], file: "真實照片/水面油膜_gambier20_CC-BY-2.0.jpg",
+     license: "gambier20｜CC BY 2.0", source_url: "https://commons.wikimedia.org/wiki/File:Rainbow_Pollution.jpg", commons: "Rainbow_Pollution.jpg",
+     teacher: {use: "薄膜干涉生活情境；連結上下界面反射光。"}}
+  - {id: L3-soapbubble, group: g3b, type: "生活實拍", kind: 實拍, lessons: [3], file: "真實照片/肥皂泡薄膜干涉_Pksois23_CC-BY-SA-4.0.jpg",
+     license: "Pksois23｜CC BY-SA 4.0", source_url: "https://commons.wikimedia.org/wiki/File:Thin_Film_Interference_Soap_Bubble.jpg", commons: "Thin_Film_Interference_Soap_Bubble.jpg",
+     teacher: {use: "薄膜干涉生活情境。"}}
+  - {id: L3-soapfilm, group: g3b, type: "生活實拍", kind: 實拍, lessons: [3], file: "真實照片/肥皂膜薄膜干涉_Yaroslav-Ulyushin_CC-BY-4.0.jpg",
+     license: "Yaroslav Ulyushin｜CC BY 4.0", source_url: "https://commons.wikimedia.org/wiki/File:%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F_%D0%B2_%D1%82%D0%BE%D0%BD%D0%BA%D0%BE%D0%B9_%D0%BC%D1%8B%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BF%D0%BB%D1%91%D0%BD%D0%BA%D0%B5.jpg",
+     commons: "%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F_%D0%B2_%D1%82%D0%BE%D0%BD%D0%BA%D0%BE%D0%B9_%D0%BC%D1%8B%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BF%D0%BB%D1%91%D0%BD%D0%BA%D0%B5.jpg",
+     teacher: {use: "薄膜厚度不均與色彩分布的定性觀察。"}}
+  - {id: L3-setup-print, group: g3b, type: "紙本衍生圖", kind: 示意, lessons: [], file: "紙本教材用/單狹縫實驗架設_空間位置示意.svg.png", status: missing, license: "本教材自製SVG之輸出", teacher: {use: "紙本教材與學習單；可作器材順序提示。"}}
+  - {id: L3-film-section, group: g3b, type: "實拍＋模型組圖", kind: 實拍＋模型, lessons: [3], file: "薄膜干涉_實拍與剖面.png", status: missing, license: "照片依各原授權；剖面為本教材自製", teacher: {use: "第3節解釋；區分真實現象與機制模型。"}}
+  - {id: L3-sources, group: g3b, type: "概念比較圖", kind: 模型, lessons: [3], file: "雙狹縫與單狹縫_次波源分布.png", status: missing, license: "本教材自製", teacher: {use: "第3節比較雙狹縫干涉與單狹縫繞射的共同原理。"}}
+  # ---- 07B 需求腳本所規劃、尚未製作的素材 ----
+  - {id: ANIM-07B, group: s07b, type: "動畫", kind: 模型, lessons: [1], file: "波的疊加動畫影片", status: missing, license: "本教材自製",
+     teacher: {use: "知識節點：疊加與通過後狀態。配合第1節學習單Q1–Q3，讓學生說明脈衝相遇前後的變化。", needs: "輸出需求：MP4／1920×1080／16∶9／36秒，另附字幕文字檔；依據第1節學習單Q1–Q3，時長為示範設定。"}}
+  - {id: SIM-superpose-07B, group: s07b, type: "模擬", kind: 模型, lessons: [1], file: "可調脈衝高度的疊加模擬", status: built, license: "本教材自製",
+     caption: "理想線性介質中的模型示意",
+     teacher: {use: "配合第1節學習單Q1–Q3，先預測，再調整脈衝高度比較結果。", needs: "交付離線HTML，支援電腦與平板；附操作文字及相遇前、重疊、通過後三張靜態圖。"}}

@@ -1,0 +1,76 @@
+# 來源：02_已填寫參考範例/10_常見學習困難與引導策略_干涉與繞射填寫示例.docx（原文照錄）
+# 學生版只輸出：困難名稱、L1–L3 提問或行動。teacher: 底下只輸出到教師版。
+note: "填寫示例；選列5項困難，學生語句為情境示範，非實測紀錄。"
+teacher:
+  basic:
+    - {label: "單元名稱", value: "干涉與繞射"}
+    - {label: "設計者／日期", value: "江長屹／115.09.04"}
+    - {label: "領域／年段", value: "高中物理／高一"}
+    - {label: "節次／活動", value: "共3節／含課後修訂"}
+    - {label: "學習重點", value: "辨識波的疊加，區分實拍與模型，並用證據說明光的干涉與繞射。"}
+  guide_note: "每項困難可複製本頁；一次給一層提示，依學生回應調整。"
+  refs:
+    - {text: "教育部診斷教學案例（2020）", url: "https://www.moe.gov.tw/News_Content.aspx?n=9E7AC85F1954DDA8&s=2D60AD02820F68AD"}
+    - {text: "國教院自然科補充教材示例（2013）", url: "https://epaper.naer.edu.tw/edm?content_no=1697&edm_no=63"}
+  footer: "本表依教材需求自編，非教育部制式表單。"
+levels:
+  L1: "L1\n釐清想法"
+  L2: "L2\n回看證據"
+  L3: "L3\n連結說明"
+items:
+  - id: m-bounce
+    lesson: 1
+    quick_name: "波像物體碰撞"
+    name: "波相遇會反彈"
+    questions: "第1節／學習單Q1、Q2"
+    hints:
+      L1: "你預測脈衝會反彈，\n是根據什麼想法？"
+      L2: "追蹤同一脈衝的相遇前、重疊與通過後；\n它的傳播方向有改變嗎？"
+      L3: "依Q2的圖，\n你會如何修訂「相遇後會反彈」？"
+    teacher:
+      quick: {performance: "「兩個波撞到後，\n會一起彈回去。」", guidance: "追蹤同一脈衝，\n比較相遇、重疊及通過後。", criterion: "能指出通過後仍沿\n原方向傳播。"}
+      performance: "學生在Q1選「反彈」，認為兩個脈衝相遇後會倒退。"
+      focus: "在理想線性介質中，區分重疊時的合成波形與通過後的傳播方向。"
+      materials: {L1: "Q1預測與理由", L2: "繩波模擬\nQ2三階段作圖", L3: "Q1初稿\nQ2觀察紀錄"}
+  - id: m-amplitude
+    lesson: 1
+    quick_name: "位移等於振幅"
+    name: "位移等於振幅"
+    hints_pending: true
+    teacher:
+      quick: {performance: "「這一刻是零，\n所以振幅是零。」", guidance: "固定同一位置，觀察完整週期；\n比較瞬時位移與最大位移。", criterion: "能以完整週期的\n最大位移判斷振幅。"}
+  - id: m-dark
+    lesson: 2
+    quick_name: "暗紋等於無光"
+    name: "暗紋等於沒有光到達"
+    questions: "第2節／學習單Q4"
+    hints:
+      L1: "你說「沒有光到達D」，\n是根據哪項觀察？"
+      L2: "在模型連出兩狹縫到D的路徑；\n兩路是否都能到達？"
+      L3: "D點兩路光到達時的振動關係，\n如何影響合成振幅與亮度？"
+    teacher:
+      quick: {performance: "「D點是暗的，\n所以沒有光到達。」", guidance: "先看兩狹縫到D的路徑，\n再比較到達時的振動關係。", criterion: "能連結兩路到達、\n反相疊加與暗紋。"}
+      performance: "學生在Q4寫：「D點沒有光到達，所以是暗的。」"
+      focus: "區分兩路光各自到達，與疊加後的合成振幅及亮度。"
+      materials: {L1: "Q4初稿\n雙狹縫紅光實拍", L2: "第2節次波模型\nB與D的位置", L3: "B／D比較圖\n學生修訂稿"}
+  - id: m-model-photo
+    lesson: 2
+    quick_name: "模型當成實拍"
+    name: "模型當成實拍"
+    hints_pending: true
+    teacher:
+      quick: {performance: "「照片裡的光\n沿圓弧前進。」", guidance: "並列實拍與波前圖，請學生\n標示來源及各圖能說明的事。", criterion: "能區分亮度證據\n與模型線條。"}
+  - id: m-unrelated
+    lesson: 3
+    quick_name: "干涉繞射無關"
+    name: "干涉與繞射原理無關"
+    questions: "第3節／活動一比較表"
+    hints:
+      L1: "你認為原理不同，\n是根據兩張圖的哪個差異？"
+      L2: "在兩個模型標出次波源；\n它們各自如何分布？"
+      L3: "根據次波源與明暗紋，\n你會如何修訂「兩者原理無關」？"
+    teacher:
+      quick: {performance: "「這兩個現象的\n原理完全不同。」", guidance: "比較雙狹縫與單狹縫模型，\n找出次波源分布與疊加關係。", criterion: "能指出共同疊加原理\n及次波源分布的差異。"}
+      performance: "學生說：「干涉和繞射的圖樣不同，所以原理完全不同。」"
+      focus: "用次波疊加連結兩種現象，區分兩狹縫與單狹縫的次波源分布。"
+      materials: {L1: "雙狹縫與單狹縫實拍\n學生原說法", L2: "活動一比較表\n雙狹縫與單狹縫模型", L3: "活動一比較表\n學生修訂稿"}

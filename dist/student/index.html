@@ -1,0 +1,1016 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 教科書</title>
+<style>:root{
+  --bg:#f7f6f2; --paper:#ffffff; --ink:#1f2328; --muted:#5d6470; --line:#dcd8cf;
+  --accent:#1f5f8b; --accent-soft:#e6f0f7; --warn:#9a5b00; --warn-soft:#fff4e0;
+  --ok:#1e7a46; --ok-soft:#e5f5ec; --bad:#b3261e; --bad-soft:#fdecea;
+  --photo:#b3261e; --model:#1f5f8b; --sketch:#6b6b6b; --teacher:#6a3fa0; --teacher-soft:#f3edfa;
+  --pending:#8a6d00; --pending-soft:#fffbe6;
+  --radius:10px; --shadow:0 1px 3px rgba(0,0,0,.08);
+  font-size:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181c; --paper:#1f2227; --ink:#e7e9ec; --muted:#a3aab5; --line:#363b43;
+    --accent:#7db8e0; --accent-soft:#1d2c38; --warn:#f0b35a; --warn-soft:#2e2414;
+    --ok:#6fd19a; --ok-soft:#15291e; --bad:#f28b82; --bad-soft:#341a19;
+    --photo:#f28b82; --model:#7db8e0; --sketch:#b0b0b0; --teacher:#c6a6f0; --teacher-soft:#261d33;
+    --pending:#e8cf6a; --pending-soft:#2a2612;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181c; --paper:#1f2227; --ink:#e7e9ec; --muted:#a3aab5; --line:#363b43;
+  --accent:#7db8e0; --accent-soft:#1d2c38; --warn:#f0b35a; --warn-soft:#2e2414;
+  --ok:#6fd19a; --ok-soft:#15291e; --bad:#f28b82; --bad-soft:#341a19;
+  --photo:#f28b82; --model:#7db8e0; --sketch:#b0b0b0; --teacher:#c6a6f0; --teacher-soft:#261d33;
+  --pending:#e8cf6a; --pending-soft:#2a2612;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.75}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:.35rem .8rem}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.link{border:none;background:none;color:var(--accent);padding:0;text-decoration:underline}
+input[type=text],textarea,select{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:.4rem .55rem;width:100%}
+textarea{resize:vertical}
+.topbar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:.75rem;padding:.5rem 1rem;flex-wrap:wrap}
+.topbar .brand{font-weight:700}
+.topbar .mode{font-size:.8rem;padding:.1rem .5rem;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.topbar .mode.t{background:var(--teacher-soft);color:var(--teacher)}
+.topbar .spacer{flex:1}
+.topbar .sid{font-size:.9rem;color:var(--muted)}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);max-width:1240px;margin:0 auto}
+.side{padding:1rem .75rem;border-right:1px solid var(--line);min-height:calc(100vh - 50px)}
+.side a{display:block;padding:.3rem .6rem;border-radius:6px;text-decoration:none;color:var(--ink);font-size:.95rem}
+.side a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.side .sec{font-size:.75rem;color:var(--muted);margin:.8rem .6rem .2rem;letter-spacing:.05em}
+.side a.t{color:var(--teacher)}
+main{padding:1.25rem 1.5rem 4rem;min-width:0}
+h1{font-size:1.6rem;margin:.2rem 0 1rem}
+h2{font-size:1.25rem;margin:2rem 0 .75rem;padding-bottom:.3rem;border-bottom:2px solid var(--line)}
+h3{font-size:1.05rem;margin:1.2rem 0 .5rem}
+.crumb{font-size:.85rem;color:var(--muted);margin-bottom:.4rem}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:1rem 1.1rem;margin:.8rem 0;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.8rem}
+.pre{white-space:pre-line}
+table{border-collapse:collapse;width:100%;background:var(--paper);font-size:.93rem}
+th,td{border:1px solid var(--line);padding:.4rem .55rem;vertical-align:top;text-align:left;white-space:pre-line}
+th{background:var(--accent-soft)}
+.tablewrap{overflow-x:auto;margin:.5rem 0}
+.kv th{width:9.5rem}
+.badge{display:inline-block;font-size:.75rem;padding:.05rem .5rem;border-radius:99px;border:1px solid currentColor;margin-right:.3rem;white-space:nowrap}
+.badge.k-實拍{color:var(--photo)} .badge.k-模型{color:var(--model)} .badge.k-示意{color:var(--sketch)} .badge.k-實拍＋模型{color:var(--photo)}
+.badge.pending{color:var(--pending)} .badge.t{color:var(--teacher)}
+.pending-box{border:1.5px dashed var(--pending);background:var(--pending-soft);color:var(--ink);border-radius:8px;padding:.6rem .8rem;margin:.6rem 0}
+.pending-box b{color:var(--pending)}
+.teacher{border-left:4px solid var(--teacher);background:var(--teacher-soft);border-radius:6px;padding:.6rem .85rem;margin:.6rem 0}
+.teacher > .tl{font-size:.78rem;font-weight:700;color:var(--teacher);letter-spacing:.05em}
+.step{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);margin:1.2rem 0;box-shadow:var(--shadow)}
+.step > header{display:flex;gap:.6rem;align-items:baseline;padding:.6rem 1rem;border-bottom:1px solid var(--line);background:var(--accent-soft);border-radius:var(--radius) var(--radius) 0 0}
+.step > header .n{font-weight:700;color:var(--accent);font-size:1.1rem}
+.step > header .tm{color:var(--muted);font-size:.85rem}
+.step > .body{padding:.6rem 1rem 1rem}
+.text-block p{margin:.5rem 0}
+.text-block .src{font-size:.8rem;color:var(--muted)}
+details.cond{border:1px solid var(--warn);background:var(--warn-soft);border-radius:8px;padding:.4rem .8rem;margin:.6rem 0}
+details.cond summary{cursor:pointer;color:var(--warn);font-weight:600}
+.understand{border-left:4px solid var(--accent);padding:.2rem .8rem;margin:.6rem 0;background:var(--accent-soft);border-radius:4px}
+.assets{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.7rem;margin:.6rem 0}
+.asset{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column}
+.asset .ph{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;padding:.6rem;background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 10px,var(--paper) 10px,var(--paper) 20px);color:var(--muted);font-size:.85rem}
+.asset img{width:100%;aspect-ratio:4/3;object-fit:cover;cursor:zoom-in;background:#000}
+.asset .meta{padding:.45rem .6rem;font-size:.82rem}
+.asset .meta .fn{word-break:break-all}
+.asset .lic{color:var(--muted)}
+.asset.wide{grid-column:1/-1}
+.q{border:1px solid var(--line);border-radius:8px;padding:.7rem .9rem;margin:.8rem 0;background:var(--paper)}
+.q .qh{font-weight:700;color:var(--accent)}
+.q .prompt{margin:.2rem 0 .5rem}
+.q .part{margin:.45rem 0}
+.q .part > label.pl{display:block;font-size:.92rem;color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;gap:.3rem 1rem}
+.opts label{display:inline-flex;align-items:center;gap:.3rem}
+.choice-grid{display:grid;grid-template-columns:auto auto 1fr;gap:.2rem .8rem;align-items:center}
+.q .actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.6rem}
+.q .state{font-size:.82rem;color:var(--muted)}
+.q.locked{border-color:var(--ok)}
+.q .draft{background:var(--bg);border-radius:6px;padding:.4rem .6rem;font-size:.9rem;margin:.4rem 0}
+.lock-notice{border:2px dashed var(--accent);border-radius:var(--radius);padding:1.2rem;text-align:center;color:var(--accent);background:var(--accent-soft);margin:1rem 0}
+.pad{border:1px solid var(--line);border-radius:6px;background:#fff;touch-action:none;width:100%;max-width:640px;display:block}
+.padbar{display:flex;gap:.4rem;margin:.3rem 0}
+.hint{border:1px solid var(--ok);background:var(--ok-soft);border-radius:8px;padding:.6rem .85rem;margin:.6rem 0}
+.hint .lv{font-weight:700;color:var(--ok);white-space:pre-line;min-width:4.5rem;display:inline-block}
+.hint .row{display:flex;gap:.6rem;margin:.35rem 0}
+.ai{border:1px dashed var(--muted);border-radius:8px;padding:.6rem .85rem;margin:.6rem 0;color:var(--muted)}
+.core{border:1px solid var(--accent);border-radius:8px;padding:.7rem .9rem;margin:.8rem 0}
+.core .ct{font-size:.8rem;font-weight:700;color:var(--accent)}
+.rub{display:grid;grid-template-columns:5rem 1fr;gap:.2rem .6rem}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:50;flex-direction:column;gap:.5rem;color:#fff;padding:1rem}
+.lightbox img{max-width:95vw;max-height:80vh}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:60;padding:16px}
+.modal{background:var(--paper);border-radius:12px;padding:1.4rem;max-width:420px;width:100%}
+.toolbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.6rem 0}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+.ok{color:var(--ok)} .bad{color:var(--bad)}
+.filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.filters button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sim{border:1px solid var(--line);border-radius:8px;padding:.6rem;background:var(--paper)}
+.sim canvas{width:100%;display:block;background:#fff;border-radius:6px}
+.sim .ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.4rem .8rem;margin:.5rem 0;font-size:.9rem}
+.sim .readout{font-family:ui-monospace,Menlo,monospace;font-size:.9rem}
+.dropzone{border:2px dashed var(--line);border-radius:10px;padding:1.5rem;text-align:center;color:var(--muted)}
+.dropzone.over{border-color:var(--accent);background:var(--accent-soft)}
+.thumb{max-width:220px;border:1px solid var(--line);background:#fff}
+/* projection */
+.proj{position:fixed;inset:0;background:var(--paper);z-index:40;overflow:auto;padding:2rem 3rem;font-size:1.45rem}
+.proj .projbar{position:fixed;right:1rem;bottom:1rem;display:flex;gap:.5rem;font-size:1rem}
+.proj .hidden-block{display:none}
+.proj h1{font-size:2.2rem}
+.proj .assets{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
+@media (max-width:820px){
+  .layout{grid-template-columns:1fr}
+  .side{min-height:auto;border-right:none;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.2rem;padding:.5rem 16px}
+  .side .sec{width:100%;margin:.3rem 0 0}
+  main{padding:1rem 16px 3rem}
+  .proj{padding:1rem 16px;font-size:1.15rem}
+}
+/* print */
+.print-page{background:#fff;color:#000;max-width:800px;margin:0 auto;padding:1rem}
+.print-page .pq{break-inside:avoid;border-bottom:1px solid #ccc;padding:.6rem 0}
+.print-page .lines div{border-bottom:1px solid #999;height:1.9rem}
+.print-page .drawbox{border:1px solid #000;height:150px;margin:.3rem 0}
+.print-page .ans{border:1px solid #6a3fa0;padding:.4rem .6rem;margin:.4rem 0;font-size:.9rem}
+@media print{
+  .topbar,.side,.noprint,.toolbar{display:none !important}
+  .layout{display:block}
+  main{padding:0}
+  body{background:#fff;color:#000}
+  .print-page{padding:0}
+}
+</style></head>
+<body><div id="app"></div>
+<script>window.TB={"mode": "student", "built_at": "2026-11-27 07:18", "units": [{"meta": {"id": "interference-diffraction", "title": "干涉與繞射", "field": "自然科學／物理", "grade": "高一", "material_version": "範例v1.0／115.09.04", "lessons": [{"n": 1, "title": "第1節　波的疊加與水波干涉", "nodes": ["01"]}, {"n": 2, "title": "第2節　光的雙狹縫干涉", "nodes": ["02"]}, {"n": 3, "title": "第3節　光的繞射與生活應用", "nodes": ["03", "04"]}]}, "text": {"source": "本專案《01_核心教材文本開發表_干涉與繞射示範版.docx》，原文照錄，未修改。", "formal_note": "本節以原始檔案（01 示範版）原文為正式版本；日後如提供出版社課本，改以課本原文替換。", "overview": [{"label": "單元名稱", "value": "干涉與繞射"}, {"label": "適用對象", "value": "高中一年級必修物理；已學過波的波長、頻率、週期與振幅等物理概念，採定性理解。"}, {"label": "核心結論", "value": "光的干涉與繞射形成有規律的明暗分布，可用波的疊加與惠更斯原理解釋，因此支持光具有波動性。"}, {"label": "先備知識", "value": "知道波會傳播；能區分位移與振幅，理解波長、頻率及週期的意義。"}, {"label": "內容範圍", "value": "處理波的疊加、水波干涉、雙狹縫、單狹縫與薄膜干涉；以定性解釋為主，暫不推導條紋位置及膜厚公式。"}], "node_order": [{"no": "01", "name": "波的疊加與水波干涉", "core": "波的疊加可造成振幅增強或減弱；位移為零不等於振幅為零。", "link": "先備：位移、振幅、週期。"}, {"no": "02", "name": "雙狹縫干涉", "core": "兩列相干光波疊加，在屏幕形成穩定的明暗分布。", "link": "承接01：將振幅增減連到光的明暗。"}, {"no": "03", "name": "單狹縫繞射", "core": "狹縫內不同位置的次波疊加，形成中央寬亮紋與旁側弱亮紋。", "link": "承接02：由兩個次波源推進到縫內許多次波源。"}, {"no": "04", "name": "薄膜干涉與單元統整", "core": "薄膜反射光的干涉可形成色彩；干涉與繞射共同支持光的波動性。", "link": "承接02、03：應用疊加概念並收束全章。"}], "nodes": {"01": {"title": "01　波的疊加與水波干涉", "understanding": "在理想線性介質中，合位移等於各波位移之和；固定位置的振幅取決於兩列波的振動關係。", "body": ["兩列繩波脈衝相遇時，會暫時在同一段繩上重疊。在理想線性介質中，該處的合位移等於兩列波各自造成的位移相加。相遇結束後，兩列脈衝仍各自沿原方向傳播。", "對同一位置的兩列同頻率週期波而言，若振動步調相同，合振幅最大，稱為完全建設性干涉；若振幅相等且振動步調恰好相反，合振幅為零，稱為完全破壞性干涉。", "位移是某一時刻偏離平衡位置的程度；振幅則是週期振動中偏離平衡位置的最大程度。某一刻位移為零，不能據此認定振幅為零。", "兩個位置固定、振動關係固定的水波源，可形成位置穩定的干涉分布。完全相消還要求兩列波到達該處時振幅相等。局部振幅為零，不代表兩列波永久消失。"], "conditions": "疊加採理想線性近似。穩定干涉須有固定的波源相位關係；完全相消須在觀察處等振幅、反相。應寫「位移相消」，避免把它說成總能量消失。"}, "02": {"title": "02　雙狹縫干涉", "understanding": "兩列相干光波到達屏幕各處時的相位差不同，形成穩定的明暗條紋。", "body": ["單色光照射兩條相近的窄縫後，屏幕可出現交替排列的明暗條紋。這些條紋是光在不同位置的強度分布，不能當成兩條狹縫的放大影像。", "依惠更斯原理，波面上各點可視為發出次波的波源；在窄縫近似下，兩條狹縫可視為兩個次波源。同一穩定單色光適當照明兩縫時，兩者頻率相同，並保持固定的相位關係，稱為相干波源。相位描述週期振動進行到哪個階段。", "兩列光波到達某處時，若相位相同便互相增強；若相位相反便互相減弱。兩列光波在該處振幅相等且反相時，可完全相消。眼睛無法追蹤光的快速振動，看到的是時間平均的光強度，因此形成亮紋與暗紋。", "暗紋不表示兩列光波都未到達。光波疊加可以解釋這種規律分布，提供光具有波動性的證據。"], "conditions": "此處採同偏振方向、相干單色光的理想模型。完全暗紋還需等振幅；實驗暗紋可能仍有背景光。兩縫都會產生繞射，不能說雙狹縫只有干涉。"}, "03": {"title": "03　單狹縫繞射", "understanding": "光通過窄縫後，縫內不同位置的次波在各方向增強或減弱，形成繞射的明暗分布。", "body": ["單色光通過窄單狹縫後，會向側方展開。在遠場條件下，屏幕中央出現較寬、較亮的中央亮紋，兩側則有較窄、逐漸變弱的旁側亮紋，亮紋之間由暗紋隔開。此處的遠場指屏幕足夠遠，使縫內各處到同一觀察點的傳播方向可近似平行。", "以均勻、同相照明的狹縫為例，縫內不同位置可視為許多次波源。正前方的次波大致同相到達，彼此增強；偏離正前方後，各次波的路徑長度不同，某些方向完全相消，另一些方向仍有部分增強。", "在相同波長與遠場觀察條件下，於本教材的狹縫尺度內縮小縫寬，會使繞射展開角度增加，中央亮紋變寬。這不是狹縫影像的單純放大。", "雙狹縫以兩縫之間的光波疊加說明條紋；單狹縫則考慮同一縫內不同位置的次波疊加。兩者都運用波的疊加概念。"], "conditions": "中央寬亮紋與旁側亮紋的敘述採遠場、均勻單色照明條件。「縫越窄，展開越明顯」須固定波長並限於本教材尺度，不能外推到所有縫寬與近場情況。"}, "04": {"title": "04　薄膜干涉與單元統整", "understanding": "透明薄膜兩表面的反射光可發生干涉；薄膜色彩與狹縫明暗分布均可用光的波動模型解釋。", "body": ["白光照到肥皂膜或水面油膜時，部分光在上表面反射，另一部分進入薄膜，在下表面反射後再離開。兩部分光朝同一觀察方向傳播時，可以互相干涉。", "干涉結果與膜厚、折射率、觀察角度及光的波長有關，也受到反射時振動相位改變的影響。相位描述振動進行到哪個階段；折射率則反映光在介質中的傳播速度。膜厚隨位置變化時，白光中的不同波長可能在不同位置增強或減弱，因而呈現彩色分布。", "牛頓環與薄空氣膜的干涉有關；抗反射鍍膜利用干涉，在設計的波長與角度範圍內降低反射。這些例子都能連回光波疊加的概念。", "回顧雙狹縫與單狹縫，雖然參與疊加的次波源分布不同，兩者都形成有規律的明暗分布。這些現象可由波動模型解釋，因此支持光具有波動性。"], "conditions": "以透明薄膜的反射光作定性說明；不能只比較幾何路徑而忽略反射相位。「抗反射」有波長與角度範圍，不表示所有光都不反射。波動性證據也不等於否定光的粒子性。"}}, "curriculum": {"source": "國家教育研究院《十二年國民基本教育課程綱要 國民中小學暨普通型高級中等學校—自然科學領域》（中華民國一○七年十一月），國中「波動、光及聲音（Ka）」學習內容，原文照錄。", "items": ["Ka-Ⅳ-1　波的特徵，例如：波峰、波谷、波長、頻率、波速、振幅。", "Ka-Ⅳ-2　波傳播的類型，例如：橫波和縱波。", "Ka-Ⅳ-6　由針孔成像、影子實驗驗證與說明光的直進性。", "Ka-Ⅳ-7　光速的大小和影響光速的因素。", "Ka-Ⅳ-8　透過實驗探討光的反射與折射規律。", "Ka-Ⅳ-9　生活中有許多運用光學原理的實例或儀器，例如：透鏡、面鏡、眼睛、眼鏡及顯微鏡等。", "Ka-Ⅳ-10　陽光經過三稜鏡可以分散成各種色光。", "Ka-Ⅳ-11　物體的顏色是光選擇性反射的結果。"]}}, "plan": {"source_file": "02_單元教案與教學指引_示範版.docx", "basic": {}, "design": [{"label": "核心問題", "value": "直進模型能解釋狹縫後的亮暗分布嗎？波的疊加如何解釋？", "student": true}, {"label": "核心理解", "value": "波在同處疊加可增強或減弱。光的干涉與繞射支持波動描述。", "student": true}], "objectives": [{"no": "1", "goal": "以疊加解釋繩波與水波。"}, {"no": "2", "goal": "解釋雙狹縫亮暗紋。"}, {"no": "3", "goal": "比較干涉、繞射與薄膜反射。"}, {"no": "4", "goal": "引用光學證據完成論證，\n查核回饋並修訂。"}], "path": "繩波疊加 → 水波干涉 → 雙狹縫 → 單狹縫與薄膜 → 波動性論證。", "overview_rows": [{"n": 1, "function": "建立規則", "question": "波如何疊加？", "material": "繩波、水波", "output": "波形、選點、CER", "time": "50分"}, {"n": 2, "function": "遷移至光", "question": "亮暗紋如何形成？", "material": "雙狹縫", "output": "屏幕圖、光CER", "time": "50分"}, {"n": 3, "function": "應用統整", "question": "何以支持波動性？", "material": "繞射、薄膜", "output": "比較、統整與反思", "time": "50分"}], "lessons": [{"n": 1, "title": "第1節　波的疊加與水波干涉", "minutes": "50分鐘", "nodes": ["01"], "steps": [{"name": "預測", "time": "0–22 分前段", "plan_row": 0, "blocks": [{"type": "assets", "ids": ["L1-rope-before"]}, {"type": "q", "ids": ["Q1"]}, {"type": "hint", "ids": ["m-bounce"]}]}, {"name": "觀察", "time": "0–22 分後段", "plan_row": 0, "blocks": [{"type": "text", "node": "01", "paras": [0]}, {"type": "assets", "ids": ["SIM-superpose", "SIM-superpose-07B", "L1-rope-compare", "ANIM-07B"]}, {"type": "q", "ids": ["Q2", "Q3"]}, {"type": "hint", "ids": ["m-bounce"]}]}, {"name": "觀察／解釋", "time": "22–42 分", "plan_row": 1, "blocks": [{"type": "q", "ids": ["Q4"]}, {"type": "text", "node": "01", "paras": [1, 2, 3]}, {"type": "assets", "ids": ["SIM-water", "L1-water-3d", "L1-ab"]}, {"type": "q", "ids": ["Q5", "Q6"]}, {"type": "hint", "ids": ["m-amplitude"]}, {"type": "core", "ids": [1, 2]}]}, {"name": "統整", "time": "42–50 分", "plan_row": 2, "blocks": [{"type": "pending", "what": "教材文本：腹線、節線命名"}, {"type": "conditions", "node": "01"}, {"type": "q", "ids": ["Q7", "Q8"]}, {"type": "download"}]}]}, {"n": 2, "title": "第2節　光的雙狹縫干涉", "minutes": "50分鐘", "nodes": ["02"], "steps": [{"name": "修訂", "time": "0–8 分", "plan_row": 0, "blocks": [{"type": "q", "ids": ["R1"]}]}, {"name": "預測", "time": "8–15 分", "plan_row": 1, "blocks": [{"type": "activity", "id": "act01"}, {"type": "assets", "ids": ["L2-predict", "L2-setup-svg"]}, {"type": "q", "ids": ["Q1"]}, {"type": "core", "ids": [3]}]}, {"name": "觀察", "time": "15–32 分", "plan_row": 2, "blocks": [{"type": "activity", "id": "act02"}, {"type": "text", "node": "02", "paras": [0]}, {"type": "assets", "ids": ["L2-redphoto", "L2-bench", "SIM-light"]}, {"type": "q", "ids": ["Q2", "Q3"]}, {"type": "hint", "ids": ["m-model-photo"]}]}, {"name": "解釋", "time": "32–45 分", "plan_row": 3, "blocks": [{"type": "activity", "id": "act03"}, {"type": "text", "node": "02", "paras": [1, 2, 3]}, {"type": "assets", "ids": ["L2-huygens", "L2-secondary", "L2-bd"]}, {"type": "q", "ids": ["Q4"]}, {"type": "hint", "ids": ["m-dark"], "ai": true}, {"type": "core", "ids": [4]}]}, {"name": "統整", "time": "45–50 分", "plan_row": 4, "blocks": [{"type": "activity", "id": "act04"}, {"type": "pending", "what": "教材文本：水波與光的比較"}, {"type": "conditions", "node": "02"}, {"type": "review", "lesson": 1}, {"type": "q", "ids": ["Q5", "Q6"]}, {"type": "download"}]}]}, {"n": 3, "title": "第3節　光的繞射與生活應用", "minutes": "50分鐘", "nodes": ["03", "04"], "steps": [{"name": "修訂", "time": "0–8 分", "plan_row": 0, "blocks": [{"type": "q", "ids": ["R2"]}]}, {"name": "觀察／解釋", "time": "8–18 分", "plan_row": 1, "blocks": [{"type": "text", "node": "03", "paras": [0, 1, 2, 3]}, {"type": "conditions", "node": "03"}, {"type": "assets", "ids": ["L3-bluephoto", "L3-ideal", "L3-adjslit", "L3-sources"]}, {"type": "q", "ids": ["Q1"]}, {"type": "hint", "ids": ["m-unrelated"]}, {"type": "core", "ids": [5]}]}, {"name": "應用", "time": "18–28 分", "plan_row": 2, "blocks": [{"type": "text", "node": "04", "paras": [0, 1, 2]}, {"type": "assets", "ids": ["L3-film-section", "L3-oil", "L3-soapbubble", "L3-soapfilm", "SIM-film", "L3-ar-lens"]}, {"type": "q", "ids": ["Q3"]}, {"type": "core", "ids": [6]}]}, {"name": "統整", "time": "28–50 分", "plan_row": [3, 4], "blocks": [{"type": "text", "node": "04", "paras": [3]}, {"type": "conditions", "node": "04"}, {"type": "assets", "ids": ["L2-redphoto", "L3-bluephoto"]}, {"type": "assets", "ids": ["L3-life", "L3-cd", "L3-peacock", "L3-morpho", "L3-hubble", "L3-newton"], "note": "結構色可能涉及干涉、繞射與散射；延伸照片依個別機制說明。"}, {"type": "q", "ids": ["Q5a", "Q5b"]}, {"type": "core", "ids": [7]}, {"type": "download"}]}]}]}, "extension": {"heading": "高一定性理解 → 高中量化 → 大一波動光學。", "basic": [{"label": "領域／科目", "value": "自然科學／物理"}, {"label": "單元名稱", "value": "干涉與繞射"}, {"label": "目前年段", "value": "高一"}, {"label": "授課節數", "value": "3節，每節50分鐘"}, {"label": "核心概念", "value": "以波的疊加解釋干涉與繞射，並用光學觀察支持波動模型。"}], "stages_header": ["規劃面向", "目前單元", "第一進階年段", "第二進階年段"], "stages": [["年級／階段", "高一", "高中進階物理", "大一普通物理"], ["學習主題", "波疊加、水波干涉、\n雙狹縫與繞射。", "雙狹縫、單狹縫、\n光柵與薄膜量化。", "相量、解析度、\n干涉量測與影像分析。"], ["理解／能力", "解釋亮暗分布；\n區分觀察與模型，\n以證據修訂解釋。", "由路程差求條紋位置；\n估算波長、縫寬\n與膜厚。", "比較強度與可見度；\n估算解析度，\n以條紋量測位移。"], ["內容範圍", "定性比較干涉、繞射\n與薄膜；不推導公式。", "先學條紋位置與近似；\n再學薄膜反射相位，\n暫不求完整強度分布。", "相量、多縫、牛頓環\n與量測；不做微積分\n推導或完整成像模型。"], ["表徵與工具", "波形圖、實拍與模擬；\n先預測、再觀察解釋。", "幾何圖、三角函數、\n小角度近似與直尺。", "相量圖、強度曲線、\n試算表擬合與殘差。"], ["必要先備", "波長、振幅、直進、\n反射與折射。", "疊加、相位、三角比、\n比例與單位換算。", "高中干涉繞射公式、\n向量、三角函數與\n基礎誤差概念。"]], "resources_intro": "各階段選列3項；點選來源可開啟原教材或網頁。", "resource_header": ["序", "資源名稱／主題", "內容摘要", "網址／來源", "用途／先備"], "groups": [{"title": "第一進階年段　高中量化", "items": [{"no": "1", "name": "原延伸教材\n第1至4章", "summary": "建立條紋位置、光柵\n與薄膜的量化模型。", "source": "高三選修物理教材", "use": "閱讀／練習\n先備：三角比、\n疊加概念"}, {"no": "2", "name": "薄膜干涉", "summary": "以泡膜、油膜連結\n光程差與反射相位。", "source": "陽明交大光電系", "links": [{"text": "閱讀網頁", "url": "https://dop.nycu.edu.tw/ch/page.html?tID=260"}], "use": "補充閱讀\n先備：折射、\n相位概念"}, {"no": "3", "name": "極光巧克力\n炫目登場", "summary": "由微細紋理與光碟\n虹彩，認識光柵應用。", "source": "臺灣網路科教館\n江淑芳、陳坤龍", "links": [{"text": "閱讀網頁", "url": "https://www.ntsec.edu.tw/liveSupply/detail.aspx?a=6829&cat=6843&lid=19944&p=1&print=1"}], "use": "閱讀／觀察\n先備：繞射、\n光柵概念"}]}, {"title": "第二進階年段　大一波動光學", "items": [{"no": "1", "name": "University\nPhysics Vol. 3", "summary": "選讀第3章與第4章\n4.1至4.5節，補強\n強度與解析度。", "source": "OpenStax", "links": [{"text": "第3章", "url": "https://openstax.org/books/university-physics-volume-3/pages/3-introduction"}, {"text": "第4章", "url": "https://openstax.org/books/university-physics-volume-3/pages/4-introduction"}], "use": "自主選讀\n先備：三角函數\n及英文閱讀"}, {"no": "2", "name": "偵測重力波的\n關鍵技術", "summary": "認識精密反射鏡鍍膜\n如何提升重力波\n探測器的靈敏度。", "source": "國立自然科學\n博物館", "links": [{"text": "閱讀網頁", "url": "https://web3.nmns.edu.tw/Exhibits/112/the-gravity-realm/unit-4.html"}], "use": "應用閱讀\n先備：薄膜、\n干涉儀概念"}]}], "footer": "高一先用現象圖；高中量化及大一內容依學生先備選讀。"}, "assets": {"basic": "高中物理／干涉與繞射／第1–3節；素材資料依原清單（2026-09-02）整理。", "intro": "依原清單精簡欄位，保留既有素材編號、檔案位置、教學用途與來源；本表不含需求腳本及公版。", "groups": [{"id": "sim", "title": "互動模擬", "note": "共通需求：可嵌入平台或另頁開啟；完全離線需先處理外部套件。原HTML未含AI回饋與操作紀錄；可用關鍵畫面作備援。"}, {"id": "g1", "title": "圖片素材 封面與第1節", "note": "檔案位置以「圖片與照片/」為起點。封面用於開場；繩波與水波圖為模型、示意或題圖，與真實觀察區分。"}, {"id": "g2", "title": "圖片素材 第2節", "note": "檔案位置以「圖片與照片/第2節/」為起點。先呈現雙狹縫實拍，再用波前、次波源與亮暗模型解釋。"}, {"id": "g3a", "title": "圖片素材 第3節 上", "note": "檔案位置以「圖片與照片/第3節/」為起點。單狹縫實拍與理想圖分列；光碟歸入週期結構繞射，油膜與肥皂膜歸入薄膜干涉。"}, {"id": "g3b", "title": "圖片素材 第3節 下", "note": "檔案位置以「圖片與照片/第3節/」為起點。結構色可能涉及干涉、繞射與散射；延伸照片依個別機制說明。"}, {"id": "s07b", "struct_title": "07B 需求腳本規劃素材", "note": "每張圖片填一份；可用文字、手繪或貼圖表達；大型草圖填於下一頁。本例為製作需求，尺寸與數值為示範設定。"}], "assets": [{"id": "SIM-superpose", "group": "sim", "type": "模擬", "kind": "模型", "lessons": [1], "file": "波的疊加拷貝.html", "status": "missing", "license": "本教材自製HTML／Canvas。"}, {"id": "SIM-water", "group": "sim", "type": "模擬", "kind": "模型", "lessons": [1], "file": "水波的干涉繞射拷貝.html", "status": "missing", "license": "本教材整合既有模擬。"}, {"id": "SIM-light", "group": "sim", "type": "模擬", "kind": "模型", "lessons": [2], "file": "光的干涉拷貝.html", "status": "missing", "license": "本教材自製HTML／Canvas。"}, {"id": "SIM-film", "group": "sim", "type": "模擬", "kind": "模型", "lessons": [3], "file": "薄膜干涉拷貝.html", "status": "missing", "license": "本教材自製HTML／Canvas。"}, {"id": "COVER-print", "group": "g1", "type": "封面／版面", "kind": "示意", "lessons": [], "file": "封面/封面_紙本13頁.png", "status": "missing", "license": "本教材版面輸出"}, {"id": "COVER-visual", "group": "g1", "type": "封面主視覺", "kind": "示意", "lessons": [], "file": "封面/干涉與繞射_封面主視覺.png", "status": "missing", "license": "本教材自製視覺"}, {"id": "L1-water-3d", "group": "g1", "type": "模擬截圖", "kind": "模型", "lessons": [1], "file": "第1節/水波干涉_3D關鍵畫面.png", "status": "missing", "license": "本教材模擬截圖；詳見第1節原創聲明"}, {"id": "L1-rope-compare", "group": "g1", "type": "概念比較圖", "kind": "示意", "lessons": [1], "file": "第1節/繩波_兩種完全重疊比較.png", "status": "missing", "license": "本教材自製"}, {"id": "L1-rope-before", "group": "g1", "type": "題圖", "kind": "示意", "lessons": [1], "file": "第1節/繩波相遇前_自製題圖.png", "status": "missing", "license": "本教材自製"}, {"id": "L1-ab", "group": "g1", "type": "題圖", "kind": "示意", "lessons": [1], "file": "第1節/雙點波源AB點_自製題圖.png", "status": "missing", "license": "本教材自製"}, {"id": "L2-huygens", "group": "g2", "type": "概念圖解", "kind": "模型", "lessons": [2], "file": "惠更斯原理_示意圖解說.png", "status": "missing", "license": "本教材自製"}, {"id": "L2-bench", "group": "g2", "type": "器材照片", "kind": "實拍", "lessons": [2], "file": "真實實驗照片/光凳器材組_Waifer-X_Cuesta-College_CC-BY-2.0.jpg", "license": "Waifer X／Cuesta College｜CC BY 2.0", "source_url": "https://commons.wikimedia.org/wiki/File:Optical_Bench_educational_Kit_-_Cuesta_College.jpg", "commons": "Optical_Bench_educational_Kit_-_Cuesta_College.jpg"}, {"id": "L2-setup-photo", "group": "g2", "type": "架設照片", "kind": "實拍", "lessons": [2], "file": "真實實驗照片/光凳實際架設_Cantons-de-lEst_CC-BY-SA-4.0.jpg", "license": "Cantons-de-l'Est｜CC BY-SA 4.0", "source_url": "https://commons.wikimedia.org/wiki/File:Banc_optique_-_exemple_de_montage_01.jpg", "commons": "Banc_optique_-_exemple_de_montage_01.jpg"}, {"id": "L2-redphoto", "group": "g2", "type": "實拍", "kind": "實拍", "lessons": [2, 3], "file": "真實實驗照片/雙狹縫干涉_紅光實拍_Bryan-Tong-Minh_PD.jpg", "license": "Bryan Tong Minh｜Public Domain", "source_url": "https://commons.wikimedia.org/wiki/File:Subwavelength_slits.JPG", "commons": "Subwavelength_slits.JPG"}, {"id": "L2-huygens-print", "group": "g2", "type": "紙本衍生圖", "kind": "模型", "lessons": [], "file": "紙本教材用/惠更斯原理_關鍵畫面.png", "status": "missing", "license": "本教材自製圖之紙本輸出"}, {"id": "L2-bd", "group": "g2", "type": "紙本模型圖", "kind": "模型", "lessons": [2], "file": "紙本教材用/雙狹縫_亮暗條紋_BD.png", "status": "missing", "license": "本教材自製理想模型"}, {"id": "L2-setup-print", "group": "g2", "type": "紙本衍生圖", "kind": "示意", "lessons": [], "file": "紙本教材用/雙狹縫實驗架設_空間位置示意.svg.png", "status": "missing", "license": "本教材自製SVG之輸出"}, {"id": "L2-setup-svg", "group": "g2", "type": "向量示意圖", "kind": "示意", "lessons": [2], "file": "雙狹縫實驗架設_空間位置示意.svg", "status": "missing", "license": "本教材自製"}, {"id": "L2-secondary", "group": "g2", "type": "模型題圖", "kind": "模型", "lessons": [2], "file": "雙狹縫次波模型_自製題圖.png", "status": "missing", "license": "本教材自製"}, {"id": "L2-predict", "group": "g2", "type": "預測題圖", "kind": "示意", "lessons": [2], "file": "雙狹縫裝置_預測題圖.png", "status": "missing", "license": "本教材自製"}, {"id": "L3-setup-svg", "group": "g3a", "type": "向量示意圖", "kind": "示意", "lessons": [], "file": "單狹縫實驗架設_空間位置示意.svg", "status": "missing", "license": "本教材自製"}, {"id": "L3-photo-doc", "group": "g3a", "type": "實拍衍生圖", "kind": "實拍", "lessons": [], "file": "單狹縫繞射_實拍_文件用.png", "status": "missing", "license": "Xyqorophibian｜CC BY-SA 4.0；文件用衍生版本", "source_url": "https://commons.wikimedia.org/wiki/File:Blue_laser_single_slit_diffraction_photo.jpg"}, {"id": "L3-ideal", "group": "g3a", "type": "理想模型圖", "kind": "模型", "lessons": [3], "file": "單狹縫繞射_理想圖樣.png", "status": "missing", "license": "本教材自製理想模型"}, {"id": "L3-life", "group": "g3a", "type": "生活現象組圖", "kind": "實拍", "lessons": [3], "file": "生活中的干涉與繞射_實拍.png", "status": "missing", "license": "依組圖各照片原授權；詳見第3節授權文件"}, {"id": "L3-ar-lens", "group": "g3a", "type": "應用實拍", "kind": "實拍", "lessons": [3], "file": "真實照片/一般鏡片與抗反射鏡片_Maximilian-Schoenherr_CC0.jpg", "license": "Maximilian Schönherr｜CC0", "source_url": "https://commons.wikimedia.org/wiki/File:Reflective_and_anti-reflective_lens.jpg", "commons": "Reflective_and_anti-reflective_lens.jpg"}, {"id": "L3-setup-photo", "group": "g3a", "type": "架設照片", "kind": "實拍", "lessons": [], "file": "真實照片/光凳實際架設_Cantons-de-lEst_CC-BY-SA-4.0.jpg", "license": "Cantons-de-l'Est｜CC BY-SA 4.0", "source_url": "https://commons.wikimedia.org/wiki/File:Banc_optique_-_exemple_de_montage_01.jpg", "commons": "Banc_optique_-_exemple_de_montage_01.jpg"}, {"id": "L3-cd", "group": "g3a", "type": "生活實拍", "kind": "實拍", "lessons": [3], "file": "真實照片/光碟繞射_Hapecko_CC-BY-SA-4.0.jpg", "license": "Hapecko｜CC BY-SA 4.0", "source_url": "https://commons.wikimedia.org/wiki/File:CD_rainbow.jpg", "commons": "CD_rainbow.jpg"}, {"id": "L3-adjslit", "group": "g3a", "type": "器材照片", "kind": "實拍", "lessons": [3], "file": "真實照片/可調式單狹縫器_Jan-Krieger_CC-BY-SA-3.0.jpg", "license": "Jan Krieger｜CC BY-SA 3.0", "source_url": "https://commons.wikimedia.org/wiki/File:Xy_adjustable_optical_slit.jpg", "commons": "Xy_adjustable_optical_slit.jpg"}, {"id": "L3-bluephoto", "group": "g3a", "type": "實拍", "kind": "實拍", "lessons": [3], "file": "真實照片/單狹縫繞射_藍光雷射_Xyqorophibian_CC-BY-SA-4.0.jpg", "license": "Xyqorophibian｜CC BY-SA 4.0", "source_url": "https://commons.wikimedia.org/wiki/File:Blue_laser_single_slit_diffraction_photo.jpg", "commons": "Blue_laser_single_slit_diffraction_photo.jpg"}, {"id": "L3-peacock", "group": "g3a", "type": "延伸照片", "kind": "實拍", "lessons": [3], "file": "真實照片/教科書補充/孔雀羽毛_Bernard-Spragg_CC0.jpg", "license": "Bernard Spragg. NZ｜CC0", "source_url": "https://commons.wikimedia.org/wiki/File:Peacock_feathers._(20779300743).jpg", "commons": "Peacock_feathers._(20779300743).jpg"}, {"id": "L3-hubble", "group": "g3b", "type": "延伸照片", "kind": "實拍", "lessons": [3], "file": "真實照片/教科書補充/望遠鏡繞射尖峰_ESA-Hubble_CC-BY-4.0.jpg", "license": "ESA/Hubble & NASA｜CC BY 4.0", "source_url": "https://commons.wikimedia.org/wiki/File:A_slice_of_Sagittarius.jpg", "commons": "A_slice_of_Sagittarius.jpg"}, {"id": "L3-newton", "group": "g3b", "type": "延伸照片", "kind": "實拍", "lessons": [3], "file": "真實照片/教科書補充/牛頓環_Ulfbastel_PD.jpg", "license": "Ulfbastel｜Public Domain", "source_url": "https://commons.wikimedia.org/wiki/File:Newton_rings.jpg", "commons": "Newton_rings.jpg"}, {"id": "L3-morpho", "group": "g3b", "type": "延伸照片", "kind": "實拍", "lessons": [3], "file": "真實照片/教科書補充/藍閃蝶_Alias0591_CC-BY-2.0.jpg", "license": "Alias 0591（Rene Mensen）｜CC BY 2.0", "source_url": "https://commons.wikimedia.org/wiki/File:Blue_Morpho_butterfly_(Morpho_peleides)_wings_open.jpg", "commons": "Blue_Morpho_butterfly_(Morpho_peleides)_wings_open.jpg"}, {"id": "L3-oil", "group": "g3b", "type": "生活實拍", "kind": "實拍", "lessons": [3], "file": "真實照片/水面油膜_gambier20_CC-BY-2.0.jpg", "license": "gambier20｜CC BY 2.0", "source_url": "https://commons.wikimedia.org/wiki/File:Rainbow_Pollution.jpg", "commons": "Rainbow_Pollution.jpg"}, {"id": "L3-soapbubble", "group": "g3b", "type": "生活實拍", "kind": "實拍", "lessons": [3], "file": "真實照片/肥皂泡薄膜干涉_Pksois23_CC-BY-SA-4.0.jpg", "license": "Pksois23｜CC BY-SA 4.0", "source_url": "https://commons.wikimedia.org/wiki/File:Thin_Film_Interference_Soap_Bubble.jpg", "commons": "Thin_Film_Interference_Soap_Bubble.jpg"}, {"id": "L3-soapfilm", "group": "g3b", "type": "生活實拍", "kind": "實拍", "lessons": [3], "file": "真實照片/肥皂膜薄膜干涉_Yaroslav-Ulyushin_CC-BY-4.0.jpg", "license": "Yaroslav Ulyushin｜CC BY 4.0", "source_url": "https://commons.wikimedia.org/wiki/File:%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F_%D0%B2_%D1%82%D0%BE%D0%BD%D0%BA%D0%BE%D0%B9_%D0%BC%D1%8B%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BF%D0%BB%D1%91%D0%BD%D0%BA%D0%B5.jpg", "commons": "%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F_%D0%B2_%D1%82%D0%BE%D0%BD%D0%BA%D0%BE%D0%B9_%D0%BC%D1%8B%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9_%D0%BF%D0%BB%D1%91%D0%BD%D0%BA%D0%B5.jpg"}, {"id": "L3-setup-print", "group": "g3b", "type": "紙本衍生圖", "kind": "示意", "lessons": [], "file": "紙本教材用/單狹縫實驗架設_空間位置示意.svg.png", "status": "missing", "license": "本教材自製SVG之輸出"}, {"id": "L3-film-section", "group": "g3b", "type": "實拍＋模型組圖", "kind": "實拍＋模型", "lessons": [3], "file": "薄膜干涉_實拍與剖面.png", "status": "missing", "license": "照片依各原授權；剖面為本教材自製"}, {"id": "L3-sources", "group": "g3b", "type": "概念比較圖", "kind": "模型", "lessons": [3], "file": "雙狹縫與單狹縫_次波源分布.png", "status": "missing", "license": "本教材自製"}, {"id": "ANIM-07B", "group": "s07b", "type": "動畫", "kind": "模型", "lessons": [1], "file": "波的疊加動畫影片", "status": "missing", "license": "本教材自製"}, {"id": "SIM-superpose-07B", "group": "s07b", "type": "模擬", "kind": "模型", "lessons": [1], "file": "可調脈衝高度的疊加模擬", "status": "built", "license": "本教材自製", "caption": "理想線性介質中的模型示意"}]}, "misconceptions": {"note": "填寫示例；選列5項困難，學生語句為情境示範，非實測紀錄。", "levels": {"L1": "L1\n釐清想法", "L2": "L2\n回看證據", "L3": "L3\n連結說明"}, "items": [{"id": "m-bounce", "lesson": 1, "quick_name": "波像物體碰撞", "name": "波相遇會反彈", "questions": "第1節／學習單Q1、Q2", "hints": {"L1": "你預測脈衝會反彈，\n是根據什麼想法？", "L2": "追蹤同一脈衝的相遇前、重疊與通過後；\n它的傳播方向有改變嗎？", "L3": "依Q2的圖，\n你會如何修訂「相遇後會反彈」？"}}, {"id": "m-amplitude", "lesson": 1, "quick_name": "位移等於振幅", "name": "位移等於振幅", "hints_pending": true}, {"id": "m-dark", "lesson": 2, "quick_name": "暗紋等於無光", "name": "暗紋等於沒有光到達", "questions": "第2節／學習單Q4", "hints": {"L1": "你說「沒有光到達D」，\n是根據哪項觀察？", "L2": "在模型連出兩狹縫到D的路徑；\n兩路是否都能到達？", "L3": "D點兩路光到達時的振動關係，\n如何影響合成振幅與亮度？"}}, {"id": "m-model-photo", "lesson": 2, "quick_name": "模型當成實拍", "name": "模型當成實拍", "hints_pending": true}, {"id": "m-unrelated", "lesson": 3, "quick_name": "干涉繞射無關", "name": "干涉與繞射原理無關", "questions": "第3節／活動一比較表", "hints": {"L1": "你認為原理不同，\n是根據兩張圖的哪個差異？", "L2": "在兩個模型標出次波源；\n它們各自如何分布？", "L3": "根據次波源與明暗紋，\n你會如何修訂「兩者原理無關」？"}}]}, "core": {"source": "題目來源：同資料夾「干涉與繞射 核心教學題目 原始完整版備份」。七題沿用原識別碼。", "unit_info": [{"label": "領域與科目", "value": "自然科學領域／高中物理；單元：干涉與繞射。"}, {"label": "年級與節數", "value": "高中學習階段；共3節課。"}, {"label": "主要學習目標", "value": "能以波的疊加解釋光的雙狹縫干涉與單狹縫繞射，並定性說明光支持波動性；能區分真實證據與模型，說明波動描述的適用範圍。"}, {"label": "內容範圍與邊界", "value": "處理七個可評量知識節點，以觀察、比較與定性解釋為主；不要求條紋間距、膜厚公式推導、參數掃描或光的全部性質。"}, {"label": "預計題數", "value": "共7題：第1節2題、第2節2題、第3節3題。"}], "items": [{"no": 1, "lesson": 1, "stage": "第1節\n預測與解釋", "goal": "能以同一位置、同一時刻的位移代數和判斷合成結果，並說明兩波通過後的狀態。", "question": "兩列波在同一位置相遇時，合成位移如何決定？兩列波通過彼此後又會發生什麼？"}, {"no": 2, "lesson": 1, "stage": "第1節\n觀察與解釋", "goal": "能依一段時間的起伏紀錄辨認腹線與節線，並解釋其位置穩定的原因。", "question": "兩個同相點波源為什麼會形成位置穩定的腹線與節線，而不是隨機斑塊或另一組向外傳播的波？"}, {"no": 3, "lesson": 2, "stage": "第2節\n預測與觀察", "goal": "能比較直進模型的預測與真實屏幕特徵，提出修正模型的理由。", "question": "如果光只沿直線前進，雙狹縫後的屏幕應出現什麼？實際觀察到的多條規律亮暗紋，如何迫使我們修正原來的模型？"}, {"no": 4, "lesson": 2, "stage": "第2節\n解釋", "goal": "能連結相干次波源、相位關係與光波疊加，說明亮紋及暗紋。", "question": "兩道狹縫為什麼可以視為兩個相干次波源？兩列光波如何在屏幕上形成亮紋與暗紋？"}, {"no": 5, "lesson": 3, "stage": "第3節\n觀察與解釋", "goal": "能比較兩種代表性圖樣與次波源分布，並指出共同的疊加原理。", "question": "雙狹縫干涉與單狹縫繞射的屏幕圖樣不同，為什麼仍可以用同一個次波疊加原理解釋？"}, {"no": 6, "lesson": 3, "stage": "第3節\n生活應用", "goal": "能指出薄膜上、下界面的兩路反射光，以干涉定性解釋色彩。", "question": "透明薄膜沒有彩色顏料，為什麼仍會出現彩色區帶？到達眼睛的是哪兩路光？"}, {"no": 7, "lesson": 3, "stage": "第3節\n統整評量", "goal": "能引用兩項真實光學觀察支持波動描述，並說明此結論的界限。", "question": "雙狹縫干涉與單狹縫繞射如何共同支持光具有波動行為？這項結論的適用範圍是什麼？"}]}, "blueprint_notes": {"levels": ["記憶", "了解", "應用", "分析", "評鑑", "創造"], "intro": "依自然科學領域課綱「科學認知」六層次設欄；未涵蓋的交叉格填「—」，不必每層均有題。", "notes": ["層次提示：記憶＝回想事實；了解＝解釋概念；應用＝運用原理；分析＝拆解關係；評鑑＝依標準判斷；創造＝提出新方案。依主要作答歷程分類，不以題型或難度判定。", "填寫提醒：占分比＝該列配分÷該份評量總分×100%；可增刪內容列。", "層次依據：教育部《十二年國民基本教育課程綱要－自然科學領域》，表二（第9頁）。"], "signature": "命題教師：＿＿＿＿＿＿　審題教師：＿＿＿＿＿＿　日期：＿＿年＿＿月＿＿日"}, "worksheets": {"1": {"lesson": 1, "pending": true, "questions": [{"id": "Q1", "label": "Q1", "plan_ref": "Q1預測", "lock": true, "parts": [{"id": "x", "type": "text", "lines": 3}]}, {"id": "Q2", "label": "Q2", "plan_ref": "Q2畫圖", "parts": [{"id": "d", "type": "draw"}, {"id": "x", "type": "text", "lines": 2}]}, {"id": "Q3", "label": "Q3", "plan_ref": "Q3用疊加解釋。", "parts": [{"id": "x", "type": "text", "lines": 3}]}, {"id": "Q4", "label": "Q4", "plan_ref": "Q4預測", "lock": true, "parts": [{"id": "x", "type": "text", "lines": 3}]}, {"id": "Q5", "label": "Q5", "plan_ref": "Q5選點", "parts": [{"id": "x", "type": "text", "lines": 2}]}, {"id": "Q6", "label": "Q6", "plan_ref": "Q6比較結果。", "parts": [{"id": "x", "type": "text", "lines": 3}]}, {"id": "Q7", "label": "Q7", "plan_ref": "Q7寫水波CER", "parts": [{"id": "x", "type": "text", "lines": 5}]}, {"id": "Q8", "label": "Q8", "plan_ref": "Q8寫想法改變。", "parts": [{"id": "x", "type": "text", "lines": 3}]}]}, "2": {"lesson": 2, "source": "教材來源：第2節「光的雙狹縫干涉」紙本學習單修訂版。保留原Q1–Q6，作答格式與時間為本示範的安排。", "activities": {"act01": {"title": "活動01　先預測（8分鐘）", "context": "一束穩定紅色雷射光通過相近的雙狹縫，遠方屏幕會出現什麼分布？本節先作定性預測。", "materials": "使用紙本與筆；先保留自己的預測與理由，再進行實際觀察。學生尚未完成Q1時，先不展示屏幕結果或開啟模擬。"}, "act02": {"title": "活動02　觀察與比較（12分鐘）", "context": "先記錄屏幕實際亮暗分布，再與Q1的預測比較。", "materials": "教師示範，或提供可回查來源的雙狹縫實拍照片／影片；無設備時使用列印照片。模擬只協助辨認規律。雷射由教師操作，不直視、不指向他人或鏡面。"}, "act03": {"title": "活動03　解釋亮暗（15分鐘）", "context": "B代表亮紋位置，D代表暗紋位置。以同偏振、相干且在觀察處等振幅的兩列光波作理想化討論。", "materials": "使用原教材雙狹縫波面模型或離線模擬。先說明窄縫可視為次波源；「相干」指同頻率且相位關係固定，「相位」描述振動進行的階段。模型用來解釋Q2的觀察。"}, "act04": {"title": "活動04　比較與統整（15分鐘）", "context": "連結前一節水波干涉經驗，整理光的雙狹縫干涉，說清楚兩種現象的共同規則與差異。", "materials": "回看第1節水波紀錄，以及本節Q2的觀察與Q4的解釋。使用既有紀錄作答；區分真實觀察與模型，不新增公式。"}}, "questions": [{"id": "R1", "label": "修訂第1節Q7", "revise_of": {"lesson": 1, "q": "Q7"}, "plan_ref": "檢查證據與推理，修訂第1節Q7。"}, {"id": "Q1", "label": "Q1", "activity": "act01", "prompt": "你預測屏幕上會看到什麼？先勾選，再畫出中央與左右兩側的明暗分布，並寫出一項理由。深色代表暗，留白代表亮。", "lock": true, "parts": [{"id": "c", "type": "choice", "options": ["主要只有兩條亮紋", "整片亮度差不多", "多條明暗相間的條紋", "其他："]}, {"id": "d", "type": "draw", "label": "我的屏幕圖樣預測（請在下方作圖）："}, {"id": "r", "type": "text", "label": "我這樣預測，因為：", "lines": 1}]}, {"id": "Q2", "label": "Q2", "activity": "act02", "prompt": "勾選資料來源，畫出中央與左右兩側的明暗分布，並寫出兩個觀察特徵。", "parts": [{"id": "c", "type": "choice", "options": ["現場示範", "有來源的實拍照片／影片", "僅理想模型"]}, {"id": "d", "type": "draw", "label": "我的觀察（請在下方作圖）："}, {"id": "f1", "type": "text", "label": "特徵一：", "lines": 1}, {"id": "f2", "type": "text", "label": "特徵二：", "lines": 1}]}, {"id": "Q3", "label": "Q3", "activity": "act02", "prompt": "與Q1比較後，你保留或修正哪一點？請引用一項觀察。", "parts": [{"id": "c", "type": "choice", "options": ["大致相同", "部分相同", "不同"]}, {"id": "k", "type": "text", "label": "我保留／修正", "lines": 1}, {"id": "e", "type": "text", "label": "依據是", "lines": 1}]}, {"id": "Q4", "label": "Q4", "activity": "act03", "prompt": "依兩個相干次波源的模型，完成B與D兩處的判斷。", "parts": [{"id": "bp", "type": "choice", "group": "B亮紋：", "label": "相位", "options": ["同相", "反相"]}, {"id": "bi", "type": "choice", "group": "B亮紋：", "label": "干涉", "options": ["建設性", "破壞性"]}, {"id": "bs", "type": "choice", "group": "B亮紋：", "label": "光強", "options": ["較強", "理想下為零"]}, {"id": "dp", "type": "choice", "group": "D暗紋：", "label": "相位", "options": ["同相", "反相"]}, {"id": "di", "type": "choice", "group": "D暗紋：", "label": "干涉", "options": ["建設性", "破壞性"]}, {"id": "ds", "type": "choice", "group": "D暗紋：", "label": "光強", "options": ["較強", "理想下為零"]}, {"id": "x", "type": "text", "label": "請用2–3句說明：兩列光波都能到達屏幕，為何仍有亮紋與暗紋？", "lines": 3}]}, {"id": "Q5", "label": "Q5", "activity": "act04", "prompt": "比較水波干涉與光的雙狹縫干涉，各寫一項可觀察的量，再寫一項共同規則。", "parts": [{"id": "w", "type": "text", "label": "水波可觀察：", "lines": 1}, {"id": "l", "type": "text", "label": "光的雙狹縫可觀察：", "lines": 1}, {"id": "r", "type": "text", "label": "共同規則：", "lines": 1}]}, {"id": "Q6", "label": "Q6", "activity": "act04", "prompt": "請用4–5句解釋雙狹縫亮暗紋。依序說明：兩個次波源 → 光波疊加 → 亮紋 → 暗紋 → 與Q2觀察的連結。", "parts": [{"id": "x", "type": "text", "lines": 5}]}]}, "3": {"lesson": 3, "pending": true, "questions": [{"id": "R2", "label": "修訂第2節Q6", "revise_of": {"lesson": 2, "q": "Q6"}, "plan_ref": "修訂第2節Q6，補上證據或推理。"}, {"id": "Q1", "label": "Q1", "plan_ref": "完成Q1；口頭比較單、雙狹縫。", "parts": [{"id": "x", "type": "text", "lines": 4}]}, {"id": "Q3", "label": "Q3", "plan_ref": "Q3指出上下表面的反射光及干涉。", "parts": [{"id": "x", "type": "text", "lines": 3}]}, {"id": "Q5a", "label": "Q5①", "plan_ref": "Q5①連結觀察、次波疊加與波動性。", "parts": [{"id": "x", "type": "text", "lines": 5}]}, {"id": "Q5b", "label": "Q5②", "plan_ref": "Q5②寫前後想法；下載完整紀錄。", "parts": [{"id": "x", "type": "text", "lines": 4}]}]}}, "assessments": {"posttest": {"id": "posttest", "title": "後測", "pending_items": true, "info": [{"label": "科目與評量", "value": "高中物理／高一；評量：干涉與繞射後測。"}, {"label": "評量範圍", "value": "完整三節單元；完成三節課教學後施測。"}, {"label": "時間與總量", "value": "25～30分鐘；共14題；總分30分。"}], "declared": {"items": 14, "points": 30}, "rows": [{"objective": "運用疊加並說明通過後狀態", "levels": {"了解": [1], "應用": [2, 7], "分析": [10]}, "points": 7}, {"objective": "判讀同調條件與水波干涉", "levels": {"了解": [4], "應用": [8]}, "points": 3}, {"objective": "說明雙狹縫相干次波源", "levels": {"了解": [5]}, "points": 1}, {"objective": "區分瞬時位移與振幅", "levels": {"了解": [3]}, "points": 1}, {"objective": "比較單雙縫圖樣與次波源分布", "levels": {"了解": [9, 12], "分析": [13]}, "points": 9}, {"objective": "解釋薄膜反射光與色彩", "levels": {"應用": [11]}, "points": 3}, {"objective": "評析波動證據與模型界限", "levels": {"評鑑": [14]}, "points": 5}, {"objective": "查核AI回饋的證據來源", "levels": {"評鑑": [6]}, "points": 1}], "notes": ["題目來源：干涉與繞射後測及教師附錄；六層次依題幹與評分要求判定，供教師覆核。", "核對：14題／30分，無重複遺漏。各列占分比進位後合計99.9%，原始比例100%。"]}, "pretest": {"id": "pretest", "title": "前測", "pending_items": true, "info": [{"label": "科目與評量", "value": "高中物理／高一；評量：干涉與繞射前測。"}, {"label": "評量範圍", "value": "完整三節單元；教學前診斷初始理解，不列平時成績。"}, {"label": "時間與總量", "value": "25～30分鐘；共14題；總分30分。"}], "declared": {"items": 14, "points": 30}, "rows": [{"objective": "運用疊加並說明通過後狀態", "levels": {"了解": [1], "應用": [2, 7], "分析": [10]}, "points": 7}, {"objective": "解釋同調與穩定水波干涉", "levels": {"了解": [4]}, "points": 1}, {"objective": "判讀振幅與位移時間紀錄", "levels": {"了解": [3, 8]}, "points": 3}, {"objective": "解釋雙狹縫次波與亮暗分布", "levels": {"了解": [5], "應用": [14]}, "points": 6}, {"objective": "判讀屏幕資料並比較預測", "levels": {"了解": [12], "分析": [13]}, "points": 7}, {"objective": "以繞射觀察評估直進模型", "levels": {"評鑑": [9]}, "points": 2}, {"objective": "辨認薄膜的兩路反射光", "levels": {"應用": [11]}, "points": 3}, {"objective": "查核AI回饋的證據來源", "levels": {"評鑑": [6]}, "points": 1}], "notes": ["題目來源：干涉與繞射前測及教師附錄；六層次依題幹與評分要求判定，供教師覆核。", "核對：14題／30分，無重複遺漏。各列占分比進位後合計99.9%，原始比例100%。"]}, "quiz-1": {"id": "quiz-1", "lesson": 1, "title": "隨堂測驗", "pending_items": true, "rows": []}, "quiz-2": {"id": "quiz-2", "lesson": 2, "title": "隨堂測驗", "pending_items": true, "rows": []}, "quiz-3": {"id": "quiz-3", "lesson": 3, "title": "隨堂測驗", "pending_items": true, "info": [{"label": "科目與評量", "value": "高中物理／高一；評量：干涉與繞射隨堂測驗第3節。"}, {"label": "評量範圍", "value": "第3節光的繞射與生活應用；該節課後施測。"}, {"label": "時間與總量", "value": "10～12分鐘；共7題；總分15分。"}], "declared": {"items": 7, "points": 15}, "rows": [{"objective": "指出單狹縫圖樣特徵", "levels": {"記憶": [1]}, "points": 1}, {"objective": "區分兩種狹縫的次波源分布", "levels": {"了解": [2]}, "points": 1}, {"objective": "說明透明薄膜色彩的成因", "levels": {"了解": [3]}, "points": 1}, {"objective": "辨識單雙狹縫亮度曲線", "levels": {"了解": [4]}, "points": 2}, {"objective": "評估直進模型的解釋限制", "levels": {"評鑑": [5]}, "points": 4}, {"objective": "以反射光相位判斷波長強弱", "levels": {"應用": [6]}, "points": 3}, {"objective": "評析只用折射解釋色彩的不足", "levels": {"評鑑": [7]}, "points": 3}], "notes": ["題目來源：干涉與繞射隨堂測驗第3節及教師附錄；六層次依題幹與評分要求判定，供教師覆核。", "本節7題／15分；三節共21題／45分。各列占分比進位後合計100.1%，原始比例100%。"]}}}]};</script>
+<script>/* AI 教科書平台：前端程式（學生版／教師版共用，由 tools/build.py 注入內容）
+ * 介面按鈕與提示是平台用語；教材文字全部來自 units/ 內容檔（已逐字比對原始檔）。 */
+(function () {
+  "use strict";
+  const TB = window.TB;
+  const T = TB.mode === "teacher";
+  const $app = document.getElementById("app");
+  const PENDING = "待補";
+
+  // ---------- 小工具 ----------
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    if (attrs) for (const [k, v] of Object.entries(attrs)) {
+      if (v == null || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k === "html") el.innerHTML = v;
+      else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (const c of kids.flat(Infinity)) {
+      if (c == null || c === false) continue;
+      el.append(c instanceof Node ? c : document.createTextNode(String(c)));
+    }
+    return el;
+  }
+  const pre = (s, cls) => h("div", { class: "pre " + (cls || "") }, s);
+  const now = () => new Date().toISOString();
+  const teacherBox = (label, ...kids) => T ? h("div", { class: "teacher" }, h("div", { class: "tl" }, "教師版　" + label), ...kids) : null;
+  const pendingBox = (what, extra) => h("div", { class: "pending-box" }, h("b", null, PENDING + "　"), what, extra ? h("div", { class: "small muted pre" }, extra) : null);
+  function kvTable(rows) {
+    return h("div", { class: "tablewrap" }, h("table", { class: "kv" }, rows.map(r => h("tr", null, h("th", null, r.label), h("td", null, r.value)))));
+  }
+  function table(header, rows) {
+    return h("div", { class: "tablewrap" }, h("table", null,
+      header ? h("thead", null, h("tr", null, header.map(x => h("th", null, x)))) : null,
+      h("tbody", null, rows.map(r => h("tr", null, r.map(c => h("td", null, c)))))));
+  }
+  function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+  function storeDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+  function storeKeys(prefix) { const out = []; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith(prefix)) out.push(k); } } catch (e) {} return out; }
+  function download(name, text, type) {
+    const blob = new Blob([text], { type: type || "application/json" });
+    const a = h("a", { href: URL.createObjectURL(blob), download: name });
+    document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  // 兩段式確認（不用瀏覽器確認對話框，嵌入框架中也能運作）
+  function confirmBtn(label, ask, action, cls) {
+    let armed = false, timer = 0;
+    const b = h("button", { class: cls || "", onclick: () => {
+      if (!armed) { armed = true; b.textContent = ask; b.classList.add("primary"); timer = setTimeout(() => { armed = false; b.textContent = label; if (!cls) b.classList.remove("primary"); }, 4000); return; }
+      clearTimeout(timer); action();
+    } }, label);
+    return b;
+  }
+  const unitById = id => TB.units.find(u => u.meta.id === id);
+
+  // ---------- 學生代碼與作答紀錄 ----------
+  const SID_KEY = "tb:sid";
+  function sid() { return store(SID_KEY) || ""; }
+  function recKey(u, n) { return `tb:rec:${u.meta.id}:${sid()}:L${n}`; }
+  function getRec(u, n) {
+    let r = store(recKey(u, n));
+    if (!r) r = { schema: "tb-record/1", student_code: sid(), unit: u.meta.id, unit_title: u.meta.title, lesson: n,
+      material_version: u.meta.material_version, site_build: TB.built_at, started_at: now(), updated_at: now(),
+      items: {}, ops: [], hints: [], handoff: [] };
+    return r;
+  }
+  function saveRec(u, n, r) { r.updated_at = now(); store(recKey(u, n), r); }
+  function logOp(u, n, type, detail) { if (T) return; const r = getRec(u, n); r.ops.push({ at: now(), type, detail }); saveRec(u, n, r); }
+  function recFileName(u, n) { return `${sid() || "未填代碼"}_${u.meta.title}_第${n}節.json`; }
+
+  function askSid(force) {
+    if (T) return;
+    if (sid() && !force) return;
+    const inp = h("input", { type: "text", placeholder: "例如：10512", value: sid() });
+    const bg = h("div", { class: "modal-bg" }, h("div", { class: "modal" },
+      h("h3", null, "輸入學生代碼"),
+      h("p", { class: "small muted" }, "作答會用這個代碼暫存在這台裝置的瀏覽器，下載的紀錄檔也以它命名。不需要帳號。"),
+      inp,
+      h("div", { class: "toolbar" }, h("button", { class: "primary", onclick: () => {
+        const v = inp.value.trim().replace(/[\\/:*?"<>|\s]/g, "");
+        if (!v) { inp.focus(); return; }
+        store(SID_KEY, v); bg.remove(); route();
+      } }, "開始"))));
+    document.body.append(bg); inp.focus();
+  }
+  function clearLocal() {
+    storeKeys("tb:").forEach(storeDel);
+    location.hash = "#/"; route();
+  }
+
+  // ---------- 外框 ----------
+  function shell(u, active, content) {
+    $app.innerHTML = "";
+    const top = h("div", { class: "topbar" },
+      h("a", { href: "#/", class: "brand", style: "text-decoration:none;color:inherit" }, "AI 教科書"),
+      h("span", { class: "mode " + (T ? "t" : "") }, T ? "教師版" : "學生版"),
+      h("span", { class: "spacer" }),
+      !T ? h("span", { class: "sid" }, "學生代碼：", sid() || "（未填）", " ", h("button", { class: "link", onclick: () => askSid(true) }, "變更")) : null,
+      !T ? confirmBtn("清除本機紀錄", "確定清除？紀錄無法復原（再按一次）", clearLocal) : null);
+    const side = u ? sideNav(u, active) : null;
+    const main = h("main", null, content);
+    $app.append(top, u ? h("div", { class: "layout" }, side, main) : h("div", { class: "layout", style: "grid-template-columns:1fr;max-width:1000px" }, main));
+    window.scrollTo(0, 0);
+  }
+  function sideNav(u, active) {
+    const id = u.meta.id; const L = (href, label, key, cls) => h("a", { href: `#/u/${id}${href}`, class: (active === key ? "on " : "") + (cls || "") }, label);
+    return h("nav", { class: "side" },
+      h("div", { class: "sec" }, u.meta.title),
+      L("", "單元首頁", "home"),
+      L("/test/pretest", "前測", "pretest"),
+      u.meta.lessons.map(l => L(`/lesson/${l.n}`, l.title, "L" + l.n)),
+      L("/test/posttest", "後測", "posttest"),
+      L("/extension", "延伸學習", "ext"),
+      L("/assets", "素材庫", "assets"),
+      L("/print", "列印中心", "print"),
+      T ? [h("div", { class: "sec" }, "教師版"),
+        L("/design", "單元教學設計", "design", "t"),
+        L("/blueprint", "雙向細目表", "blueprint", "t"),
+        L("/misconceptions", "學習困難速查", "mis", "t"),
+        L("/grade", "匯入作答與批改", "grade", "t")] : null);
+  }
+
+  // ---------- 平台首頁 ----------
+  function pageHome() {
+    const fields = [...new Set(TB.units.map(u => u.meta.field))], grades = [...new Set(TB.units.map(u => u.meta.grade))];
+    let ff = "", gf = "";
+    const list = h("div", { class: "grid" });
+    function draw() {
+      list.innerHTML = "";
+      TB.units.filter(u => (!ff || u.meta.field === ff) && (!gf || u.meta.grade === gf)).forEach(u => list.append(
+        h("a", { href: `#/u/${u.meta.id}`, class: "card", style: "text-decoration:none;color:inherit;display:block" },
+          h("div", { class: "small muted" }, u.meta.field, "｜", u.meta.grade),
+          h("h3", { style: "margin:.2rem 0" }, u.meta.title),
+          h("div", { class: "small" }, u.meta.lessons.map(l => l.title).join("\n")))));
+    }
+    const sel = (opts, set) => h("select", { style: "width:auto", onchange: e => { set(e.target.value); draw(); } }, h("option", { value: "" }, "全部"), opts.map(o => h("option", { value: o }, o)));
+    shell(null, null, [h("h1", null, "單元清單"),
+      h("div", { class: "toolbar" }, "領域：", sel(fields, v => ff = v), "　年級：", sel(grades, v => gf = v)),
+      list]);
+    draw();
+  }
+
+  // ---------- 單元首頁 ----------
+  function pageUnit(u) {
+    const tx = u.text, pl = u.plan;
+    shell(u, "home", [
+      h("div", { class: "crumb" }, "單元首頁"),
+      h("h1", null, u.meta.title),
+      h("h2", null, "單元總覽"),
+      kvTable(tx.overview),
+      h("div", { class: "small muted" }, "來源：", tx.source),
+      h("h3", null, "核心問題與核心理解"),
+      kvTable(pl.design.filter(d => d.student || T)),
+      h("h3", null, "學習路徑"),
+      h("p", null, pl.path),
+      h("h3", null, "知識節點順序"),
+      table(["順序", "知識節點名稱", "核心知識", "銜接依據"], tx.node_order.map(n => [n.no, n.name, n.core, n.link])),
+      h("h3", null, "學習目標"),
+      T ? table(["序", "學習目標", "可觀察證據", "達成規準"], pl.objectives.map(o => [o.no, o.goal, o.teacher.evidence, o.teacher.criteria]))
+        : table(["序", "學習目標"], pl.objectives.map(o => [o.no, o.goal])),
+      h("h2", null, "節次"),
+      h("div", { class: "grid" }, u.meta.lessons.map((l, i) => {
+        const ov = pl.overview_rows[i];
+        return h("a", { href: `#/u/${u.meta.id}/lesson/${l.n}`, class: "card", style: "text-decoration:none;color:inherit;display:block" },
+          h("h3", { style: "margin:0 0 .3rem" }, l.title),
+          h("div", { class: "small" }, "本節功能：", ov.function), h("div", { class: "small" }, "核心問題／重點：", ov.question),
+          h("div", { class: "small" }, "教材／活動：", ov.material), h("div", { class: "small" }, "學生主要產出：", ov.output),
+          h("div", { class: "small muted" }, ov.time));
+      })),
+      h("h2", null, "課綱依據（國中先備）"),
+      h("div", { class: "small muted" }, "來源：", tx.curriculum.source),
+      h("ul", null, tx.curriculum.items.map(x => h("li", null, x))),
+      T && tx.curriculum.teacher ? teacherBox("提醒", tx.curriculum.teacher.reminder) : null,
+      !T ? [h("h2", null, "我的作答紀錄"),
+        h("div", { class: "toolbar" }, u.meta.lessons.map(l => h("button", { onclick: () => download(recFileName(u, l.n), JSON.stringify(getRec(u, l.n), null, 2)) }, `下載第${l.n}節紀錄`)),
+          h("button", { class: "primary", onclick: () => download(`${sid() || "未填代碼"}_${u.meta.title}_完整紀錄.json`, JSON.stringify(u.meta.lessons.map(l => getRec(u, l.n)), null, 2)) }, "下載完整紀錄")),
+        h("p", { class: "small muted" }, "把下載的檔案交到 Google Classroom 或老師指定的雲端資料夾。")] : null,
+    ]);
+  }
+
+  // ---------- 內容元件：教材文本 ----------
+  function textBlock(u, node, paras) {
+    const nd = u.text.nodes[node];
+    const first = paras.includes(0);
+    return h("div", { class: "text-block" },
+      first ? h("div", { class: "small muted" }, "知識節點 ", nd.title) : null,
+      first ? h("div", { class: "understand" }, h("b", null, "核心理解　"), nd.understanding) : null,
+      paras.map(i => h("p", null, nd.body[i])),
+      h("div", { class: "src" }, "來源：", u.text.source),
+      T && nd.teacher ? teacherBox("查核",
+        nd.teacher.curriculum_note ? h("div", null, nd.teacher.curriculum_note) : null,
+        h("div", null, h("b", null, nd.teacher.check_label, "："), nd.teacher.check.join("　")),
+        h("div", null, h("b", null, nd.teacher.self_check_label, "："), pre(nd.teacher.self_check.join("\n"))),
+        h("div", { class: "small" }, u.text.formal_note)) : null);
+  }
+  function condBlock(u, node) {
+    const nd = u.text.nodes[node];
+    return h("details", { class: "cond" }, h("summary", null, "成立條件與易混淆處（", nd.title, "）"), h("p", null, nd.conditions));
+  }
+
+  // ---------- 內容元件：素材 ----------
+  function commonsUrl(a, w) { return `https://commons.wikimedia.org/wiki/Special:FilePath/${a.commons}?width=${w || 900}`; }
+  function assetCard(u, a, ctx) {
+    const lesson = ctx && ctx.lesson;
+    const badge = h("span", { class: "badge k-" + a.kind }, a.kind);
+    let media;
+    if (a.id === "SIM-superpose-07B") return h("div", { class: "asset wide" }, superposeSim(u, lesson), h("div", { class: "meta" }, badge, " ", a.file, "　", h("span", { class: "lic" }, a.license), assetTeacher(a)));
+    if (a.commons) {
+      const ph = h("div", { class: "ph", style: "display:none" }, "圖片無法載入（離線或連線受限）", h("br"), a.file);
+      const img = h("img", { src: commonsUrl(a, 700), alt: a.file, loading: "lazy",
+        onerror: () => { img.style.display = "none"; ph.style.display = "flex"; },
+        onclick: () => { lightbox(a); if (lesson) logOp(u, lesson, "放大照片", a.id); } });
+      media = [img, ph];
+    } else {
+      media = h("div", { class: "ph" }, h("div", null, h("span", { class: "badge pending" }, "素材檔" + PENDING), h("br"), a.file));
+    }
+    return h("div", { class: "asset" }, media,
+      h("div", { class: "meta" }, badge, h("span", { class: "small muted" }, a.type), h("div", { class: "fn" }, a.file),
+        h("div", { class: "lic" }, "來源／授權：", a.license, a.source_url ? [" ", h("a", { href: a.source_url, target: "_blank", rel: "noopener" }, "來源頁")] : null),
+        assetTeacher(a)));
+  }
+  function assetTeacher(a) {
+    if (!T || !a.teacher) return null;
+    return h("div", { class: "teacher small" }, h("div", { class: "tl" }, "教師版　用途"), a.teacher.use, a.teacher.needs ? h("div", null, h("b", null, "使用需求："), a.teacher.needs) : null);
+  }
+  function lightbox(a) {
+    const lb = h("div", { class: "lightbox", onclick: () => lb.remove() },
+      h("img", { src: commonsUrl(a, 1600), alt: a.file }),
+      h("div", { class: "small" }, a.file, "　", a.license), h("button", null, "關閉"));
+    document.body.append(lb);
+  }
+
+  // ---------- 07B 疊加模擬（依 07B 需求腳本） ----------
+  function superposeSim(u, lesson) {
+    const W = 900, H = 360;
+    const cv = h("canvas", { width: W, height: H });
+    const ctx = cv.getContext("2d");
+    let hA = 1, hB = 1, t = 0, playing = false, last = 0, raf = 0;
+    const width = 0.2, speed = 0.05; // 全寬 20%；每秒 5% 畫面寬度
+    const pulse = (x, c, a) => Math.abs(x - c) < width / 2 ? a * (1 + Math.cos(Math.PI * (x - c) / (width / 2))) / 2 : 0;
+    const yA = x => pulse(x, 0.25 + speed * t, hA), yB = x => pulse(x, 0.75 - speed * t, hB);
+    const fmt = v => (v > 0.0001 ? "＋" : v < -0.0001 ? "－" : "") + Math.abs(v).toFixed(2);
+    const readout = h("div", { class: "readout" });
+    function plot(y0, hh, fn, style) {
+      ctx.save(); ctx.strokeStyle = "#111"; ctx.lineWidth = style.w; ctx.setLineDash(style.dash || []);
+      ctx.beginPath();
+      for (let i = 0; i <= 600; i++) { const x = i / 600, px = 40 + x * (W - 60), py = y0 - fn(x) / 3 * (hh / 2); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+      ctx.stroke(); ctx.restore();
+    }
+    function frame() {
+      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, H);
+      ctx.font = "14px sans-serif"; ctx.fillStyle = "#333";
+      const regions = [{ y: 90, hh: 150, label: "分波 A、B" }, { y: 270, hh: 150, label: "合成繩形" }];
+      regions.forEach(r => {
+        ctx.strokeStyle = "#bbb"; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(40, r.y); ctx.lineTo(W - 20, r.y); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillText(r.label, 44, r.y - r.hh / 2 + 14); ctx.fillStyle = "#888"; ctx.fillText("平衡位置", W - 80, r.y - 4);
+        [-3, 3].forEach(v => ctx.fillText((v > 0 ? "＋" : "－") + "3", 6, r.y - v / 3 * (r.hh / 2) + 5)); ctx.fillStyle = "#333";
+      });
+      const px = 40 + 0.5 * (W - 60);
+      ctx.strokeStyle = "#c33"; ctx.beginPath(); ctx.moveTo(px, 10); ctx.lineTo(px, H - 10); ctx.stroke(); ctx.fillStyle = "#c33"; ctx.fillText("P", px + 4, 24); ctx.fillStyle = "#333";
+      plot(90, 150, yA, { w: 1.5 }); plot(90, 150, yB, { w: 1.5, dash: [7, 5] });
+      ctx.fillText("A（細實線）", 0.25 * (W - 60) + 20 + speed * t * (W - 60), 40);
+      ctx.fillText("B（虛線）", 0.75 * (W - 60) + 10 - speed * t * (W - 60), 40);
+      plot(270, 150, x => yA(x) + yB(x), { w: 3.5 });
+      ctx.fillStyle = "#666"; ctx.fillText("理想線性介質中的模型示意", 44, H - 8);
+      const a = yA(0.5), b = yB(0.5);
+      readout.textContent = `P點：A ${fmt(a)}　B ${fmt(b)}　合成 ${fmt(a + b)}　（t = ${t.toFixed(1)} 秒）`;
+    }
+    function tick(ts) { if (!playing) return; if (last) t += (ts - last) / 1000; last = ts; if (t > 18) { t = 18; playing = false; playBtn.textContent = "播放"; } frame(); if (playing) raf = requestAnimationFrame(tick); }
+    function reset(keepH) { playing = false; cancelAnimationFrame(raf); t = 0; last = 0; if (!keepH) { hA = 1; hB = 1; sA.value = 1; sB.value = 1; } lab(); playBtn.textContent = "播放"; frame(); }
+    const playBtn = h("button", { class: "primary", onclick: () => {
+      playing = !playing; playBtn.textContent = playing ? "暫停" : "播放"; last = 0;
+      if (lesson) logOp(u, lesson, playing ? "模擬播放" : "模擬暫停", `A=${hA},B=${hB},t=${t.toFixed(1)}`);
+      if (playing) raf = requestAnimationFrame(tick);
+    } }, "播放");
+    const mk = () => h("input", { type: "range", min: -1.5, max: 1.5, step: 0.1, value: 1, style: "width:100%" });
+    const sA = mk(), sB = mk(), lA = h("span"), lB = h("span");
+    const lab = () => { lA.textContent = fmt(hA).replace(".00", ""); lB.textContent = fmt(hB).replace(".00", ""); };
+    sA.oninput = () => { hA = +sA.value; reset(true); }; sB.oninput = () => { hB = +sB.value; reset(true); };
+    sA.onchange = sB.onchange = () => lesson && logOp(u, lesson, "調整脈衝高度", `A=${hA},B=${hB}`);
+    const kase = (a, b, name) => h("button", { onclick: () => { hA = a; hB = b; sA.value = a; sB.value = b; reset(true); lesson && logOp(u, lesson, "切換案例", name); } }, name);
+    lab(); frame();
+    return h("div", { class: "sim" }, cv,
+      h("div", { class: "ctl" },
+        h("label", null, "脈衝高度 A（含正負號）：", lA, sA),
+        h("label", null, "脈衝高度 B（含正負號）：", lB, sB)),
+      h("div", { class: "toolbar" }, playBtn, kase(1, 1, "同向"), kase(1, -1, "反向"), h("button", { onclick: () => { reset(false); lesson && logOp(u, lesson, "模擬重設", ""); } }, "重設")),
+      readout);
+  }
+
+  // ---------- 內容元件：畫板 ----------
+  function drawPad(value, onSave, disabled) {
+    const cv = h("canvas", { class: "pad", width: 640, height: 200 });
+    const ctx = cv.getContext("2d");
+    function paintBg() { ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height); ctx.strokeStyle = "#ddd"; ctx.beginPath(); ctx.moveTo(cv.width / 2, 0); ctx.lineTo(cv.width / 2, cv.height); ctx.stroke(); ctx.fillStyle = "#aaa"; ctx.font = "12px sans-serif"; ctx.fillText("中央", cv.width / 2 + 4, 14); ctx.fillText("左側", 6, 14); ctx.fillText("右側", cv.width - 34, 14); }
+    paintBg();
+    if (value) { const im = new Image(); im.onload = () => ctx.drawImage(im, 0, 0); im.src = value; }
+    let down = false, eraser = false, lx = 0, ly = 0;
+    const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+    if (!disabled) {
+      cv.addEventListener("pointerdown", e => { down = true; [lx, ly] = pos(e); cv.setPointerCapture(e.pointerId); });
+      cv.addEventListener("pointermove", e => { if (!down) return; const [x, y] = pos(e); ctx.strokeStyle = eraser ? "#fff" : "#111"; ctx.lineWidth = eraser ? 22 : 6; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(x, y); ctx.stroke(); lx = x; ly = y; });
+      const up = () => { if (down) { down = false; onSave(cv.toDataURL("image/png")); } };
+      cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+    }
+    const penB = h("button", { onclick: () => { eraser = false; penB.className = "primary"; erB.className = ""; } , class: "primary" }, "畫筆（深色＝暗）");
+    const erB = h("button", { onclick: () => { eraser = true; erB.className = "primary"; penB.className = ""; } }, "橡皮擦");
+    return h("div", null, disabled ? null : h("div", { class: "padbar" }, penB, erB, h("button", { onclick: () => { paintBg(); onSave(""); } }, "全部清除")), cv);
+  }
+
+  // ---------- 學習單題目 ----------
+  function partsFilled(q, parts) {
+    if (!q.parts) return !!(parts && parts.x && parts.x.trim());
+    return q.parts.every(p => {
+      const v = parts && parts[p.id];
+      if (p.type === "draw") return true; // 作圖不強制
+      if (p.type === "choice") return !!v;
+      return !!(v && String(v).trim());
+    });
+  }
+  function anyFilled(parts) { return parts && Object.values(parts).some(v => v && String(v).trim()); }
+  function renderParts(q, parts, onChange, ro) {
+    const out = [];
+    let lastGroup = null, grid = null;
+    (q.parts || [{ id: "x", type: "text", lines: 4 }]).forEach(p => {
+      const val = parts[p.id] || "";
+      if (p.type === "choice") {
+        const name = "c" + Math.random().toString(36).slice(2);
+        const opts = h("div", { class: "opts" }, p.options.map(o => h("label", null,
+          h("input", { type: "radio", name, value: o, checked: val === o, disabled: ro, onchange: () => onChange(p.id, o) }), o,
+          o === "其他：" ? h("input", { type: "text", style: "width:10rem", value: parts[p.id + "_other"] || "", disabled: ro, oninput: e => onChange(p.id + "_other", e.target.value) }) : null)));
+        if (p.group) {
+          if (p.group !== lastGroup) { grid = h("div", { class: "choice-grid" }); out.push(h("div", { class: "part" }, grid)); lastGroup = p.group; grid.append(h("b", null, p.group)); } else grid.append(h("span"));
+          grid.append(h("span", null, p.label), opts);
+        } else out.push(h("div", { class: "part" }, p.label ? h("label", { class: "pl" }, p.label) : null, opts));
+      } else if (p.type === "draw") {
+        out.push(h("div", { class: "part" }, p.label ? h("label", { class: "pl" }, p.label) : h("label", { class: "pl" }, "作圖區"), drawPad(val, d => onChange(p.id, d), ro)));
+      } else {
+        const ta = h("textarea", { rows: Math.max(1, p.lines || 3), disabled: ro, oninput: e => onChange(p.id, e.target.value) }); ta.value = val;
+        out.push(h("div", { class: "part" }, p.label ? h("label", { class: "pl" }, p.label) : null, ta));
+      }
+    });
+    return out;
+  }
+  function partsSummary(q, parts) {
+    if (!parts) return "（未作答）";
+    return (q.parts || [{ id: "x", type: "text" }]).map(p => {
+      const v = parts[p.id];
+      if (p.type === "draw") return v ? "［作圖］" : "";
+      const lab = (p.group || "") + (p.label || "");
+      return v ? (lab ? lab + " " : "") + v + (parts[p.id + "_other"] ? " " + parts[p.id + "_other"] : "") : "";
+    }).filter(Boolean).join("\n") || "（未作答）";
+  }
+
+  function questionCard(u, lesson, q, ctx) {
+    const ws = u.worksheets[lesson];
+    const box = h("div", { class: "q" });
+    const rec = () => getRec(u, lesson);
+    function item() { const r = rec(); return r.items[q.id] || { parts: {} }; }
+    function setItem(it) { const r = rec(); r.items[q.id] = it; saveRec(u, lesson, r); }
+    function draw() {
+      box.innerHTML = "";
+      const it = item();
+      const locked = q.lock && it.submitted_at;
+      box.className = "q" + (locked ? " locked" : "");
+      box.append(h("div", { class: "qh" }, q.label, q.lock ? h("span", { class: "badge", style: "margin-left:.5rem" }, "預測") : null));
+      if (q.prompt) box.append(h("div", { class: "prompt" }, q.prompt));
+      else box.append(pendingBox("題目文字" + PENDING, q.plan_ref ? "02 教案：" + q.plan_ref : ""));
+      if (q.revise_of) {
+        const src = getRec(u, q.revise_of.lesson).items[q.revise_of.q];
+        const sq = u.worksheets[q.revise_of.lesson].questions.find(x => x.id === q.revise_of.q);
+        box.append(h("div", { class: "draft" }, h("b", null, `第${q.revise_of.lesson}節${sq.label} 原稿：`), pre(T ? "（學生作答）" : partsSummary(sq, src && (src.draft ? src.draft.parts : src.parts)))));
+      }
+      if (T) {
+        box.append(...renderParts(q, {}, () => {}, true));
+        const tch = q.teacher;
+        if (tch) box.append(teacherBox("參考答案與判讀", tch.answer.map(x => h("p", null, x)), tch.errors ? [h("div", { class: "tl" }, "常見錯誤與引導"), tch.errors.map(x => h("p", null, x))] : null));
+        else box.append(teacherBox("參考答案與判讀", pendingBox("參考答案與判讀" + PENDING)));
+        return;
+      }
+      if (it.draft && !q.lock) box.append(h("details", { class: "draft" }, h("summary", null, "初稿（已保存 ", new Date(it.draft.at).toLocaleString("zh-TW"), "）"), pre(partsSummary(q, it.draft.parts))));
+      box.append(...renderParts(q, it.parts, (pid, v) => {
+        const cur = item(); cur.parts[pid] = v; cur.edited_at = now(); setItem(cur); stateEl.textContent = "已自動暫存 " + new Date().toLocaleTimeString("zh-TW");
+        updButtons();
+      }, locked));
+      let reasonTa = null;
+      if (it.draft && !q.lock) {
+        reasonTa = h("textarea", { rows: 2, oninput: e => { const cur = item(); cur.revision_reason = e.target.value; setItem(cur); } }); reasonTa.value = it.revision_reason || "";
+        box.append(h("div", { class: "part" }, h("label", { class: "pl" }, "修訂理由（依哪項觀察或提示修改？）"), reasonTa));
+      }
+      const stateEl = h("span", { class: "state" }, locked ? "預測已送出（" + new Date(it.submitted_at).toLocaleString("zh-TW") + "），保留初稿，觀察後再比較。" : it.draft ? "初稿已保存；可以直接修改成修訂稿。" : "");
+      const btn = q.lock
+        ? confirmBtn("送出預測", "送出後不能再修改，確定送出（再按一次）", () => { const cur = item(); cur.submitted_at = now(); cur.draft = { parts: JSON.parse(JSON.stringify(cur.parts)), at: now() }; setItem(cur); logOp(u, lesson, "送出預測", q.id); route(); }, "primary")
+        : h("button", { class: "primary", onclick: () => { const cur = item(); cur.draft = { parts: JSON.parse(JSON.stringify(cur.parts)), at: now() }; setItem(cur); logOp(u, lesson, "儲存初稿", q.id); draw(); } }, "儲存初稿");
+      function updButtons() { btn.disabled = !anyFilled(item().parts); }
+      updButtons();
+      if (!locked && !(it.draft && !q.lock)) box.append(h("div", { class: "actions" }, btn, stateEl)); else box.append(h("div", { class: "actions" }, stateEl));
+    }
+    draw();
+    return box;
+  }
+
+  // ---------- 分層提示（10）＋ AI 追問接口（08） ----------
+  function hintBlock(u, lesson, mid, qids, withAI) {
+    const m = u.misconceptions.items.find(x => x.id === mid);
+    if (!m) return null;
+    const wrap = h("div", { class: "hint" });
+    const tq = T && m.teacher ? teacherBox("學習困難速查（" + m.quick_name + "）",
+      table(["學生表現", "引導方式", "改善判準"], [[m.teacher.quick.performance, m.teacher.quick.guidance, m.teacher.quick.criterion]]),
+      m.teacher.performance ? kvTable([{ label: "學生表現", value: m.teacher.performance }, { label: "學習重點", value: m.teacher.focus }]) : null,
+      m.teacher.materials ? table(["提示層次", "對照材料"], Object.entries(m.teacher.materials).map(([k, v]) => [u.misconceptions.levels[k], v])) : null) : null;
+    if (m.hints_pending || !m.hints) {
+      return h("div", null, h("div", { class: "pending-box" }, h("b", null, "分層提示 L1–L3 " + PENDING), "　", m.name), tq);
+    }
+    const levels = ["L1", "L2", "L3"];
+    function used() { if (T) return 3; return getRec(u, lesson).hints.filter(x => x.misconception === mid && x.source === "fixed").map(x => x.level); }
+    function ready() { if (T) return true; const r = getRec(u, lesson); return qids.some(id => r.items[id] && anyFilled(r.items[id].parts)); }
+    function draw() {
+      wrap.innerHTML = "";
+      const u_ = T ? levels : levels.filter(l => used().includes(l));
+      wrap.append(h("div", null, h("b", null, "提示"), h("span", { class: "small muted" }, "　一次給一層提示，先想想再看下一層。")));
+      u_.forEach(l => wrap.append(h("div", { class: "row" }, h("span", { class: "lv" }, u.misconceptions.levels[l]), pre(m.hints[l]))));
+      if (!T) {
+        const next = levels.find(l => !u_.includes(l));
+        const r = getRec(u, lesson);
+        const flagged = r.handoff.some(x => x.misconception === mid);
+        const tb = h("div", { class: "toolbar" });
+        if (next) tb.append(h("button", { disabled: !ready(), onclick: () => {
+          const rr = getRec(u, lesson); rr.hints.push({ at: now(), source: "fixed", misconception: mid, level: next, questions: qids, text: m.hints[next] }); saveRec(u, lesson, rr); draw();
+        } }, u_.length ? "下一層提示" : "給我提示"));
+        if (u_.length >= 2) tb.append(h("button", { disabled: flagged, onclick: () => {
+          const rr = getRec(u, lesson); rr.handoff.push({ at: now(), misconception: mid, questions: qids, after_level: u_[u_.length - 1] }); saveRec(u, lesson, rr); draw();
+        } }, flagged ? "已請老師協助" : "還是卡住，請老師協助"));
+        if (!ready()) tb.append(h("span", { class: "small muted" }, "請先作答，再使用提示。"));
+        wrap.append(tb);
+      }
+      if (withAI) wrap.append(aiBlock(u, lesson, qids));
+    }
+    draw();
+    // 作答後重新評估按鈕狀態
+    if (!T) document.addEventListener("input", () => { if (wrap.isConnected) { const b = wrap.querySelector("button"); if (b && b.textContent === "給我提示") b.disabled = !ready(); } });
+    return h("div", null, wrap, tq);
+  }
+  function aiBlock(u, lesson, qids) {
+    const ai = window.TextbookAI; // 預留：日後接上 AI 服務時，提供 { ask(context) => Promise<string> }
+    const box = h("div", { class: "ai" });
+    const out = h("div");
+    const r = T ? null : getRec(u, lesson);
+    const ok = !T && qids.every(id => { const q = u.worksheets[lesson].questions.find(x => x.id === id); return r.items[id] && partsFilled(q, r.items[id].parts); });
+    const btn = h("button", { disabled: !ai || !ok, onclick: async () => {
+      const q = u.worksheets[lesson].questions.find(x => x.id === qids[0]);
+      const ctx = { unit: u.meta.id, lesson, question: q, answer: getRec(u, lesson).items[q.id], ops: getRec(u, lesson).ops };
+      btn.disabled = true; out.textContent = "…";
+      try { const reply = await ai.ask(ctx); out.textContent = reply; const rr = getRec(u, lesson); rr.hints.push({ at: now(), source: "ai", questions: qids, text: reply }); saveRec(u, lesson, rr); }
+      catch (e) { out.append(h("div", null, "AI 沒有回應。", h("button", { onclick: () => btn.click() }, "重試"), " 或略過，繼續完成活動。")); }
+      btn.disabled = false;
+    } }, "請AI追問");
+    box.append(h("div", { class: "toolbar" }, btn, h("span", { class: "small" }, !ai ? "AI未啟用時由教師追問" : !ok ? "請先完成選項與解釋" : "可略過")), out);
+    return box;
+  }
+
+  // ---------- 核心題（05） ----------
+  function coreBlock(u, lesson, no) {
+    const c = u.core.items.find(x => x.no === no);
+    const q = { id: "C" + no, label: "核心題 " + no, prompt: c.question, parts: [{ id: "x", type: "text", lines: 4 }] };
+    const card = h("div", { class: "core" },
+      h("div", { class: "ct" }, "核心教學題目 ", no, "　", c.stage.replace("\n", "／")),
+      h("div", { class: "small" }, h("b", null, "學習目標："), c.goal));
+    const qc = questionCard(u, lesson, q);
+    card.append(qc);
+    if (T) {
+      const t = c.teacher;
+      card.append(teacherBox("答案要素、常見迷思、成功規準",
+        kvTable([{ label: "主要功能", value: t.function }, { label: "知識節點與核心概念", value: t.concepts }, { label: "預期證據", value: t.evidence.join("\n") }, { label: "答案要素", value: t.answer.join("\n") }, { label: "常見迷思與錯誤", value: t.misconceptions }]),
+        rubricView(t.rubric), t.check ? h("div", { class: "small" }, t.check) : null));
+    }
+    return card;
+  }
+  function rubricView(r) { return h("div", { class: "rub" }, Object.entries(r).map(([k, v]) => [h("b", null, k), h("span", null, v)])); }
+
+  // ---------- 節次頁 ----------
+  function pageLesson(u, n) {
+    const L = u.plan.lessons.find(x => x.n === n);
+    const ws = u.worksheets[n];
+    const qById = id => ws.questions.find(q => q.id === id);
+    const stepsEl = [];
+    let blocked = false;
+    L.steps.forEach((s, si) => {
+      const body = h("div", { class: "body" });
+      const blocks = [];
+      for (const b of s.blocks) {
+        if (blocked) break;
+        let el = null;
+        if (b.type === "text") el = textBlock(u, b.node, b.paras);
+        else if (b.type === "conditions") el = condBlock(u, b.node);
+        else if (b.type === "assets") el = h("div", null, b.note ? h("div", { class: "small muted" }, b.note) : null,
+          h("div", { class: "assets" }, b.ids.map(id => assetCard(u, u.assets.byId[id], { lesson: n }))));
+        else if (b.type === "q") el = h("div", null, b.ids.map(id => questionCard(u, n, qById(id))));
+        else if (b.type === "hint") el = h("div", null, b.ids.map(id => hintBlock(u, n, id, s.blocks.filter(x => x.type === "q").flatMap(x => x.ids), b.ai)));
+        else if (b.type === "core") el = h("div", null, b.ids.map(no => coreBlock(u, n, no)));
+        else if (b.type === "pending") el = pendingBox(b.what);
+        else if (b.type === "activity") { const a = ws.activities[b.id]; el = h("div", { class: "card", style: "box-shadow:none" }, h("b", null, a.title), h("p", null, a.context), h("div", { class: "small" }, h("b", null, "使用材料與操作："), a.materials)); }
+        else if (b.type === "teacher_note") el = teacherBox("教師投影", b.text, h("div", { class: "small" }, "可在「匯入作答與批改」開啟學生作答，隱去代碼後投影。"));
+        else if (b.type === "teacher_hint") { const q = qById(b.q); el = T && q.teacher ? teacherBox("追問（" + q.label + "）", q.teacher.errors.map(x => h("p", null, x))) : null; }
+        else if (b.type === "review") {
+          const prev = u.worksheets[b.lesson]; const r = T ? null : getRec(u, b.lesson);
+          el = h("details", { class: "card" }, h("summary", null, `第${b.lesson}節紀錄回看`),
+            prev.questions.filter(q => !q.revise_of).map(q => h("div", { class: "draft" }, h("b", null, q.label, "　"), pre(T ? "（學生作答）" : partsSummary(q, r.items[q.id] && r.items[q.id].parts)))));
+        }
+        else if (b.type === "download") el = T ? null : h("div", { class: "toolbar" }, h("button", { class: "primary", onclick: () => { const r = getRec(u, n); r.completed_at = r.completed_at || now(); saveRec(u, n, r); download(recFileName(u, n), JSON.stringify(getRec(u, n), null, 2)); } }, "下載本節紀錄"), h("span", { class: "small muted" }, "檔名：", recFileName(u, n)));
+        if (el) blocks.push(el);
+        if (!T && b.type === "q" && b.ids.some(id => { const q = qById(id); return q.lock && !(getRec(u, n).items[id] || {}).submitted_at; })) blocked = true;
+      }
+      if (!blocks.length && blocked) return;
+      const rows = [].concat(s.plan_row).map(i => L.teacher && L.teacher.rows[i]).filter(Boolean);
+      body.append(...blocks);
+      if (T && rows.length) body.prepend(teacherBox("教案流程（02）", table(["時間", "教師活動與提問", "學生活動與預期表現", "評量／證據", "教材／備註"], rows.map(r => [r.time, r.teacher, r.student, r.evidence, r.note]))));
+      stepsEl.push(h("section", { class: "step", "data-step": si }, h("header", null, h("span", { class: "n" }, s.name), h("span", { class: "tm" }, s.time)), body));
+    });
+    if (blocked) stepsEl.push(h("div", { class: "lock-notice" }, "完成預測並按「送出預測」後，才會顯示後續的觀察素材與題目。"));
+    const quiz = u.assessments["quiz-" + n];
+    const ov = u.plan.overview_rows[n - 1];
+    shell(u, "L" + n, [
+      h("div", { class: "crumb" }, u.meta.title, " › ", L.title),
+      h("h1", null, L.title),
+      h("div", { class: "toolbar" },
+        h("span", { class: "badge" }, L.minutes), h("span", null, h("b", null, "核心問題／重點："), ov.question),
+        T ? h("button", { class: "primary", onclick: () => projection(u, n) }, "投影模式") : null,
+        h("a", { href: `#/u/${u.meta.id}/print/${n}/student` }, "列印學習單"), T ? h("a", { href: `#/u/${u.meta.id}/print/${n}/teacher` }, "列印教師版") : null),
+      ws.pending ? pendingBox(`第${n}節學習單完整題目` + PENDING, "03 只示範第2節；本節題號與任務取自 02 教案。") : h("div", { class: "small muted" }, ws.source),
+      T && L.teacher ? teacherBox("銜接與目標／產出與教材", kvTable([{ label: "銜接與目標", value: L.teacher.bridge }, { label: "產出與教材", value: L.teacher.outputs }, { label: "專業說明", value: L.teacher.expert }, { label: "條件與誤解", value: L.teacher.caveats }])) : null,
+      T && ws.teacher ? teacherBox("學習單活動總覽（03）", ws.teacher.overview.map(o => kvTable([{ label: o.label, value: o.lines.join("\n") }])), table(["順序", "活動名稱", "主要任務與題號", "預計時間"], ws.teacher.sequence.map(s => [s.no, s.name, s.task, s.time]))) : null,
+      stepsEl,
+      blocked ? null : h("section", { class: "step" }, h("header", null, h("span", { class: "n" }, "隨堂測驗")), h("div", { class: "body" }, assessmentBody(u, quiz))),
+    ]);
+  }
+
+  // ---------- 投影模式（教師版） ----------
+  function projection(u, n) {
+    const L = u.plan.lessons.find(x => x.n === n);
+    const steps = [...document.querySelectorAll("section.step[data-step]")];
+    let si = 0, bi = 0;
+    const view = h("div", { class: "proj" });
+    function blocksOf(i) { return [...steps[i].querySelector(".body").children].filter(c => !c.classList.contains("teacher")); }
+    function draw() {
+      view.innerHTML = "";
+      const s = L.steps[si];
+      view.append(h("div", { class: "muted" }, L.title), h("h1", null, s.name, "　", h("span", { class: "muted", style: "font-size:1.2rem" }, s.time)));
+      blocksOf(si).forEach((b, i) => { const c = b.cloneNode(true); c.querySelectorAll(".teacher").forEach(x => x.remove()); if (i > bi) c.classList.add("hidden-block"); view.append(c); });
+      view.append(h("div", { class: "projbar" },
+        h("button", { onclick: back }, "上一項"), h("button", { class: "primary", onclick: next }, "揭示下一項"),
+        h("span", { class: "muted", style: "align-self:center" }, `${si + 1}/${steps.length}`), h("button", { onclick: close }, "離開投影")));
+    }
+    function next() { if (bi < blocksOf(si).length - 1) bi++; else if (si < steps.length - 1) { si++; bi = 0; } draw(); }
+    function back() { if (bi > 0) bi--; else if (si > 0) { si--; bi = blocksOf(si).length - 1; } draw(); }
+    function key(e) { if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); next(); } else if (e.key === "ArrowLeft") back(); else if (e.key === "Escape") close(); }
+    function close() { view.remove(); document.removeEventListener("keydown", key); }
+    document.addEventListener("keydown", key);
+    document.body.append(view); draw();
+  }
+
+  // ---------- 評量（前測、隨堂、後測） ----------
+  function assessmentItems(a) {
+    const items = [];
+    (a.rows || []).forEach(r => Object.entries(r.levels).forEach(([lv, nos]) => nos.forEach(no => items.push({ no, objective: r.objective, level: lv, row_points: r.points }))));
+    return items.sort((x, y) => x.no - y.no);
+  }
+  function assessmentBody(u, a) {
+    const items = assessmentItems(a);
+    return [
+      a.info ? kvTable(a.info) : null,
+      pendingBox("題目" + PENDING, a.rows && a.rows.length ? "06 只提供雙向細目表藍圖，實際題目尚未提供。" : "06 未提供本份評量的雙向細目表與題目。"),
+      items.length ? h("ol", { class: "small" }, items.map(it => h("li", { value: it.no }, "第", it.no, "題　", h("span", { class: "badge pending" }, "題目" + PENDING),
+        T ? [h("span", { class: "badge t" }, it.level), it.objective] : null))) : null,
+      T && a.notes ? teacherBox("06 備註", a.notes.map(x => h("div", { class: "small" }, x))) : null,
+    ];
+  }
+  function pageTest(u, id) {
+    const a = u.assessments[id];
+    shell(u, id, [h("div", { class: "crumb" }, u.meta.title, " › ", a.title), h("h1", null, a.title), assessmentBody(u, a),
+      T ? h("p", null, h("a", { href: `#/u/${u.meta.id}/blueprint` }, "看自動產生的雙向細目表")) : null]);
+  }
+
+  // ---------- 雙向細目表（教師版，由題目標籤自動產生） ----------
+  function blueprintTable(u, a) {
+    const LV = u.blueprint_notes.levels;
+    const items = assessmentItems(a);
+    if (!items.length) return pendingBox("本份評量的題目與標籤" + PENDING);
+    const total = a.rows.reduce((s, r) => s + r.points, 0);
+    const rows = a.rows.map(r => {
+      const its = items.filter(i => i.objective === r.objective);
+      return [r.objective, ...LV.map(l => (r.levels[l] || []).join("、") || "—"), String(its.length), String(r.points), (r.points / total * 100).toFixed(1) + "%"];
+    });
+    const sumRow = ["合計", ...LV.map(l => items.filter(i => i.level === l).length + "題"), String(items.length), String(total), "100%"];
+    const nos = items.map(i => i.no).sort((x, y) => x - y);
+    const dup = nos.filter((x, i) => nos.indexOf(x) !== i);
+    const missing = []; for (let i = 1; i <= a.declared.items; i++) if (!nos.includes(i)) missing.push(i);
+    const okItems = items.length === a.declared.items, okPts = total === a.declared.points;
+    return [table(["學習目標與知識節點", ...LV, "題數", "配分", "占分比"], [...rows, sumRow]),
+      h("div", { class: "small" },
+        h("span", { class: okItems ? "ok" : "bad" }, `題數：${items.length}／06 宣告 ${a.declared.items} ${okItems ? "✓" : "✗"}`), "　",
+        h("span", { class: okPts ? "ok" : "bad" }, `配分：${total}／06 宣告 ${a.declared.points} ${okPts ? "✓" : "✗"}`), "　",
+        h("span", { class: dup.length || missing.length ? "bad" : "ok" }, dup.length ? `重複題號：${dup.join("、")}` : missing.length ? `遺漏題號：${missing.join("、")}` : "題號無重複遺漏 ✓")),
+      h("div", { class: "small muted" }, "各層次配分需每題配分，06 只提供各列合計，待補。")];
+  }
+  function pageBlueprint(u) {
+    const ids = ["pretest", "quiz-1", "quiz-2", "quiz-3", "posttest"];
+    shell(u, "blueprint", [h("h1", null, "雙向細目表"),
+      h("p", { class: "small muted" }, "由每題的學習目標與認知層次標籤自動產生；題數、配分與題號另做核對。"),
+      h("p", { class: "small" }, u.blueprint_notes.intro),
+      ids.map(id => { const a = u.assessments[id]; return [h("h2", null, a.lesson ? `第${a.lesson}節` : "", a.title), a.info ? kvTable(a.info) : null, blueprintTable(u, a), a.notes ? a.notes.map(x => h("div", { class: "small muted" }, x)) : null]; }),
+      h("h2", null, "說明"), u.blueprint_notes.notes.map(x => h("p", { class: "small" }, x)), h("p", { class: "small muted" }, u.blueprint_notes.signature)]);
+  }
+
+  // ---------- 延伸學習（04） ----------
+  function pageExtension(u) {
+    const e = u.extension;
+    shell(u, "ext", [h("div", { class: "crumb" }, u.meta.title, " › 延伸學習"), h("h1", null, "延伸學習"),
+      h("p", null, e.heading), kvTable(e.basic),
+      h("h2", null, "三階段學習進程"), table(e.stages_header, e.stages),
+      h("h2", null, "延伸資源"), h("p", { class: "small muted" }, e.resources_intro),
+      e.groups.map(g => [h("h3", null, g.title), table(e.resource_header, g.items.map(it => [it.no, it.name, it.summary, h("div", null, pre(it.source), (it.links || []).map((l, i) => [i ? "／" : "", h("a", { href: l.url, target: "_blank", rel: "noopener" }, l.text)])), it.use]))]),
+      h("p", { class: "small muted" }, e.footer)]);
+  }
+
+  // ---------- 素材庫（07A） ----------
+  function pageAssets(u) {
+    let lf = 0, kf = "";
+    const kinds = ["實拍", "模型", "示意"];
+    const list = h("div");
+    function draw() {
+      list.innerHTML = "";
+      u.assets.groups.forEach(g => {
+        const as = u.assets.assets.filter(a => a.group === g.id && (!lf || a.lessons.includes(lf)) && (!kf || a.kind.includes(kf)));
+        if (!as.length) return;
+        list.append(h("h2", null, g.title || g.struct_title), h("p", { class: "small muted" }, g.note), h("div", { class: "assets" }, as.map(a => assetCard(u, a))));
+      });
+      if (T) list.append(scriptsView(u));
+    }
+    const fbtn = (label, on, set) => h("button", { class: on ? "on" : "", onclick: () => { set(); draw(); bar(); } }, label);
+    const fb = h("div");
+    function bar() {
+      fb.innerHTML = "";
+      fb.append(h("div", { class: "filters" }, "節次：", fbtn("全部", !lf, () => lf = 0), u.meta.lessons.map(l => fbtn(`第${l.n}節`, lf === l.n, () => lf = l.n))),
+        h("div", { class: "filters" }, "類型：", fbtn("全部", !kf, () => kf = ""), kinds.map(k => fbtn(k, kf === k, () => kf = k))));
+    }
+    bar();
+    shell(u, "assets", [h("div", { class: "crumb" }, u.meta.title, " › 素材庫"), h("h1", null, "素材庫"),
+      h("p", { class: "small" }, u.assets.basic), h("p", { class: "small muted" }, u.assets.intro),
+      h("p", { class: "small muted" }, "開放授權照片直接連到 Wikimedia Commons 原圖並標示作者與授權；本教材自製的圖片與模擬檔尚未提供，先以清單佔位。"),
+      fb, list]);
+    draw();
+  }
+  function scriptsView(u) {
+    const s = u.scripts && u.scripts.teacher;
+    if (!s) return null;
+    const img = name => TB.images && TB.images[name] ? h("img", { src: TB.images[name], style: "max-width:100%;border:1px solid var(--line);background:#fff" }) : null;
+    return teacherBox("多模態輔助教材需求腳本（07B，製作用）", s.scripts.map(sc => h("div", { class: "card" },
+      h("h3", null, sc.title), h("p", { class: "small muted" }, sc.intro),
+      sc.fields.map(f => kvTable([{ label: f.label, value: f.lines.join("\n") }])),
+      sc.shots ? [h("p", { class: "small" }, sc.shots_note), table(sc.shots_header, sc.shots.map(x => [x.no, h("div", null, x.scene, img(x.img)), x.narration, x.action, x.note]))] : null,
+      sc.params ? [table(sc.params_header, sc.params), h("p", { class: "small muted" }, sc.params_note)] : null,
+      sc.ops ? table(sc.ops_header, sc.ops) : null,
+      sc.misread ? kvTable([{ label: "多模態呈現容易誤解處", value: sc.misread.join("\n") }]) : null,
+      sc.output ? h("p", { class: "small" }, sc.output) : null,
+      sc.reminder ? h("p", { class: "small" }, sc.reminder) : null,
+      sc.image ? [h("p", { class: "small" }, sc.image.caption), img(sc.image.src), h("p", { class: "small muted" }, sc.image.note)] : null)));
+  }
+
+  // ---------- 單元教學設計（教師版，02） ----------
+  function pageDesign(u) {
+    const p = u.plan;
+    const ck = store("tb:t:delivery") || {};
+    shell(u, "design", [h("h1", null, "單元教學設計"), h("div", { class: "small muted" }, "來源：", p.source_file),
+      h("h2", null, "一　基本資料"), kvTable(p.basic.teacher),
+      h("h2", null, "二　教學設計依據"), kvTable(p.design),
+      h("h3", null, "學習目標與評量對應"), table(["序", "學習目標", "可觀察證據", "達成規準"], p.objectives.map(o => [o.no, o.goal, o.teacher.evidence, o.teacher.criteria])),
+      h("h2", null, "三　單元進程與教學準備"), kvTable([{ label: "學習路徑", value: p.path }]),
+      table(["節次", "本節功能", "核心問題／重點", "教材／活動", "學生主要產出", "時間"], p.overview_rows.map(r => [String(r.n), r.function, r.question, r.material, r.output, r.time])),
+      kvTable(p.teacher.prep),
+      h("h2", null, "四　分節教學設計"),
+      p.lessons.map(L => [h("h3", null, L.title, "（", L.minutes, "）"),
+        kvTable([{ label: "銜接與目標", value: L.teacher.bridge }, { label: "產出與教材", value: L.teacher.outputs }]),
+        table(["時間", "教師活動與提問", "學生活動與預期表現", "評量／證據", "教材／備註"], L.teacher.rows.map(r => [r.time, r.teacher, r.student, r.evidence, r.note])),
+        kvTable([{ label: "專業說明", value: L.teacher.expert }, { label: "條件與誤解", value: L.teacher.caveats }])]),
+      h("h2", null, "五　評量與學習記錄"),
+      table(["評量時機", "學生任務／題目", "判斷標準", "記錄位置"], p.teacher.assessment.map(a => [a.when, a.task, a.criteria, a.where])),
+      kvTable([{ label: "數位記錄", value: p.teacher.digital_record }]),
+      h("h2", null, "六　附件與交付"),
+      table(["序", "附件／素材名稱", "用途／使用位置", "作者／來源授權"], p.teacher.attachments.map(a => [a.no, a.name, a.use, a.license])),
+      h("h3", null, "交付檢核"), h("div", null, p.teacher.delivery_check_intro,
+        p.teacher.delivery_check.map(x => h("label", { style: "display:block" }, h("input", { type: "checkbox", checked: !!ck[x], onchange: e => { ck[x] = e.target.checked; store("tb:t:delivery", ck); } }), " ", x)))]);
+  }
+  function pageMis(u) {
+    const m = u.misconceptions;
+    shell(u, "mis", [h("h1", null, "學習困難速查"), h("p", { class: "small muted" }, m.note), kvTable(m.teacher.basic),
+      h("h2", null, "一　困難與引導速查"),
+      table(["節次／學習困難", "學生表現", "引導方式", "改善判準"], m.items.map(i => [`第${i.lesson}節\n${i.quick_name}`, i.teacher.quick.performance, i.teacher.quick.guidance, i.teacher.quick.criterion])),
+      h("h2", null, "二　單項引導表"), h("p", { class: "small muted" }, m.teacher.guide_note),
+      m.items.map(i => h("div", { class: "card" }, h("h3", null, i.name, i.questions ? "　" + i.questions : ""),
+        i.hints ? [kvTable([{ label: "學生表現", value: i.teacher.performance }, { label: "學習重點", value: i.teacher.focus }]),
+          table(["提示層次", "提問或行動", "對照材料"], ["L1", "L2", "L3"].map(l => [m.levels[l], i.hints[l], i.teacher.materials[l]]))]
+          : pendingBox("本項 L1–L3 單項引導表" + PENDING, "10 只提供速查列。"))),
+      h("p", { class: "small" }, "設計參考：", m.teacher.refs.map((r, i) => [i ? "、" : "", h("a", { href: r.url, target: "_blank", rel: "noopener" }, r.text)])),
+      h("p", { class: "small muted" }, m.teacher.footer)]);
+  }
+
+  // ---------- 匯入作答與批改（教師版） ----------
+  function allQuestions(u, n) {
+    const ws = u.worksheets[n];
+    const qs = ws.questions.map(q => ({ ...q, kind: q.teacher && q.teacher.key ? "auto" : "open" }));
+    u.plan.lessons.find(x => x.n === n).steps.forEach(s => s.blocks.filter(b => b.type === "core").forEach(b => b.ids.forEach(no => {
+      const c = u.core.items.find(x => x.no === no);
+      qs.push({ id: "C" + no, label: "核心題 " + no, prompt: c.question, parts: [{ id: "x", type: "text" }], kind: "open", core: c });
+    })));
+    return qs;
+  }
+  function autoScore(q, parts) {
+    if (!q.teacher || !q.teacher.key || !parts) return null;
+    const k = q.teacher.key; const keys = Object.keys(k);
+    return { got: keys.filter(x => parts[x] === k[x]).length, of: keys.length };
+  }
+  function pageGrade(u) {
+    let recs = store("tb:t:import") || [];
+    const grades = store("tb:t:grades") || {};
+    let lesson = 1;
+    const area = h("div");
+    const dz = h("div", { class: "dropzone" }, "把全班的作答紀錄檔（.json）拖到這裡，或 ", h("label", { class: "link", style: "text-decoration:underline;cursor:pointer;color:var(--accent)" }, "選擇檔案", h("input", { type: "file", multiple: true, accept: ".json,application/json", style: "display:none", onchange: e => readFiles(e.target.files) })));
+    dz.addEventListener("dragover", e => { e.preventDefault(); dz.classList.add("over"); });
+    dz.addEventListener("dragleave", () => dz.classList.remove("over"));
+    dz.addEventListener("drop", e => { e.preventDefault(); dz.classList.remove("over"); readFiles(e.dataTransfer.files); });
+    const msg = h("div", { class: "small" });
+    async function readFiles(files) {
+      let added = 0, bad = [];
+      for (const f of files) {
+        try { let d = JSON.parse(await f.text()); if (!Array.isArray(d)) d = [d];
+          d.forEach(r => { if (r.schema !== "tb-record/1" || r.unit !== u.meta.id) throw 0; recs = recs.filter(x => !(x.student_code === r.student_code && x.lesson === r.lesson)); recs.push(r); added++; });
+        } catch (e) { bad.push(f.name); }
+      }
+      store("tb:t:import", recs);
+      msg.textContent = `已匯入 ${added} 份紀錄。` + (bad.length ? `無法讀取：${bad.join("、")}` : "");
+      draw();
+    }
+    const gk = (s, n, q) => `${s}|${n}|${q}`;
+    function draw() {
+      area.innerHTML = "";
+      const qs = allQuestions(u, lesson);
+      const rs = recs.filter(r => r.lesson === lesson).sort((a, b) => String(a.student_code).localeCompare(String(b.student_code)));
+      area.append(h("div", { class: "filters" }, u.meta.lessons.map(l => h("button", { class: lesson === l.n ? "on" : "", onclick: () => { lesson = l.n; draw(); } }, `第${l.n}節（${recs.filter(r => r.lesson === l.n).length}）`))));
+      if (!rs.length) { area.append(h("p", { class: "muted" }, "這一節還沒有匯入紀錄。")); return; }
+      area.append(table(["學生代碼", ...qs.map(q => q.label), "提示", "轉教師", "更新時間"], rs.map(r => [
+        r.student_code,
+        ...qs.map(q => { const it = r.items[q.id]; const sc = autoScore(q, it && it.parts); const g = grades[gk(r.student_code, lesson, q.id)];
+          return h("button", { class: "link", onclick: () => detail(r, q) }, !it ? "—" : sc ? `${sc.got}/${sc.of}` : g || "待評"); }),
+        String(r.hints.length), r.handoff.length ? "是" : "", new Date(r.updated_at).toLocaleString("zh-TW")])));
+    }
+    function detail(r, q) {
+      const it = r.items[q.id] || {};
+      const sc = autoScore(q, it.parts);
+      const key = gk(r.student_code, lesson, q.id);
+      const crit = q.core ? q.core.teacher.rubric : null;
+      const bg = h("div", { class: "modal-bg", onclick: e => { if (e.target === bg) bg.remove(); } }, h("div", { class: "modal", style: "max-width:760px;max-height:90vh;overflow:auto" },
+        h("h3", null, r.student_code, "　第", lesson, "節　", q.label),
+        q.prompt ? h("p", { class: "small" }, q.prompt) : pendingBox("題目文字" + PENDING, q.plan_ref ? "02 教案：" + q.plan_ref : ""),
+        it.draft ? [h("b", null, "初稿"), pre(partsSummary(q, it.draft.parts), "draft"), drawings(q, it.draft.parts)] : null,
+        h("b", null, it.draft ? "修訂稿／目前作答" : "目前作答"), pre(partsSummary(q, it.parts), "draft"), drawings(q, it.parts),
+        it.revision_reason ? [h("b", null, "修訂理由"), pre(it.revision_reason, "draft")] : null,
+        sc ? h("p", null, h("b", null, "自動計分："), `${sc.got}/${sc.of}`) : null,
+        q.teacher ? teacherBox("參考答案與判讀", q.teacher.answer.map(x => h("p", { class: "small" }, x))) : null,
+        crit ? teacherBox("成功規準（05）", rubricView(crit)) : null,
+        !sc ? h("div", null, h("b", null, "三級規準評分："), ["達成", "發展中", "待支持"].map(l => h("label", { style: "margin-right:1rem" },
+          h("input", { type: "radio", name: "g", checked: grades[key] === l, onchange: () => { grades[key] = l; store("tb:t:grades", grades); draw(); } }), " ", l))) : null,
+        r.hints.filter(x => (x.questions || []).includes(q.id)).length ? [h("b", null, "提示使用歷程"), h("ul", { class: "small" }, r.hints.filter(x => (x.questions || []).includes(q.id)).map(x => h("li", null, new Date(x.at).toLocaleTimeString("zh-TW"), " ", x.level || "AI", "：", x.text)))] : null,
+        h("div", { class: "toolbar" }, h("button", { onclick: () => bg.remove() }, "關閉"))));
+      document.body.append(bg);
+    }
+    function drawings(q, parts) { return (q.parts || []).filter(p => p.type === "draw" && parts && parts[p.id]).map(p => h("img", { class: "thumb", src: parts[p.id] })); }
+    function csv() {
+      const esc = v => `"${String(v == null ? "" : v).replace(/"/g, '""')}"`;
+      const lines = [["學生代碼", "節次", "題號", "題型", "自動計分", "三級規準", "初稿", "修訂稿／目前作答", "修訂理由", "使用提示層次", "轉教師", "更新時間", "教材版本"].map(esc).join(",")];
+      recs.forEach(r => allQuestions(u, r.lesson).forEach(q => {
+        const it = r.items[q.id]; if (!it) return;
+        const sc = autoScore(q, it.parts);
+        lines.push([r.student_code, r.lesson, q.label, sc ? "客觀" : "開放", sc ? `${sc.got}/${sc.of}` : "", grades[gk(r.student_code, r.lesson, q.id)] || "",
+          it.draft ? partsSummary(q, it.draft.parts) : "", partsSummary(q, it.parts), it.revision_reason || "",
+          r.hints.filter(x => (x.questions || []).includes(q.id)).map(x => x.level || "AI").join(" "), r.handoff.some(x => (x.questions || []).includes(q.id)) ? "是" : "", r.updated_at, r.material_version].map(esc).join(","));
+      }));
+      download(`${u.meta.title}_成績.csv`, "﻿" + lines.join("\r\n"), "text/csv");
+    }
+    shell(u, "grade", [h("h1", null, "匯入作答與批改"),
+      h("p", { class: "small muted" }, "紀錄只存在這台電腦的瀏覽器。客觀題自動計分；開放題依三級規準（達成／發展中／待支持）點選。"),
+      dz, msg,
+      h("div", { class: "toolbar" }, h("button", { class: "primary", onclick: csv }, "匯出 CSV"),
+        confirmBtn("清除匯入資料", "確定清除匯入紀錄與評分（再按一次）", () => { storeDel("tb:t:import"); storeDel("tb:t:grades"); route(); })),
+      area]);
+    draw();
+  }
+
+  // ---------- 列印中心 ----------
+  function pagePrintIndex(u) {
+    shell(u, "print", [h("h1", null, "列印中心"),
+      table(["節次", "學生版", T ? "教師版" : null].filter(Boolean), u.meta.lessons.map(l => [l.title,
+        h("a", { href: `#/u/${u.meta.id}/print/${l.n}/student` }, "學習單（學生版）"),
+        T ? h("a", { href: `#/u/${u.meta.id}/print/${l.n}/teacher` }, "學習單（教師版）") : null].filter(x => x !== null)))]);
+  }
+  function pagePrint(u, n, who) {
+    const tv = who === "teacher" && T;
+    const ws = u.worksheets[n], L = u.plan.lessons.find(x => x.n === n);
+    const order = [];
+    L.steps.forEach(s => s.blocks.forEach(b => {
+      if (b.type === "activity") order.push({ act: ws.activities[b.id] });
+      if (b.type === "q") b.ids.forEach(id => order.push({ q: ws.questions.find(q => q.id === id) }));
+      if (b.type === "core") b.ids.forEach(no => order.push({ core: u.core.items.find(c => c.no === no) }));
+    }));
+    const lines = k => h("div", { class: "lines" }, Array.from({ length: k }, () => h("div")));
+    const page = h("div", { class: "print-page" },
+      h("div", { class: "toolbar noprint" }, h("button", { class: "primary", onclick: () => window.print() }, "列印"), h("a", { href: `#/u/${u.meta.id}/lesson/${n}` }, "回到節次頁")),
+      h("h2", { style: "margin-top:0" }, u.meta.title, "　", L.title, "　學習單", tv ? "（教師版）" : ""),
+      h("p", null, "學生代碼：＿＿＿＿＿＿　日期：＿＿＿＿＿＿"),
+      ws.pending ? pendingBox(`第${n}節學習單完整題目` + PENDING, "03 只示範第2節；本節題號與任務取自 02 教案。") : null,
+      order.map(o => {
+        if (o.act) return h("div", { class: "pq" }, h("b", null, o.act.title), h("p", null, o.act.context));
+        if (o.core) return h("div", { class: "pq" }, h("b", null, "核心題 ", o.core.no), h("p", null, o.core.question), lines(4),
+          tv ? h("div", { class: "ans" }, h("b", null, "答案要素："), o.core.teacher.answer.join(" "), h("br"), rubricView(o.core.teacher.rubric)) : null);
+        const q = o.q;
+        return h("div", { class: "pq" }, h("b", null, q.label, "　"), q.prompt || h("span", null, "題目" + PENDING + (q.plan_ref ? "（02 教案：" + q.plan_ref + "）" : "")),
+          (q.parts || [{ type: "text", lines: 4 }]).map(p => p.type === "choice" ? h("div", null, p.group || "", p.label ? p.label + "　" : "", p.options.map(x => "□ " + x + (x === "其他：" ? "＿＿＿＿" : "")).join("　"))
+            : p.type === "draw" ? [p.label ? h("div", null, p.label) : null, h("div", { class: "drawbox" })]
+            : [p.label ? h("div", null, p.label) : null, lines(p.lines || 3)]),
+          tv && q.teacher ? h("div", { class: "ans" }, h("b", null, "參考答案與判讀："), q.teacher.answer.map(x => h("div", null, x)), q.teacher.errors ? [h("b", null, "常見錯誤與引導："), q.teacher.errors.map(x => h("div", null, x))] : null) : null);
+      }));
+    $app.innerHTML = ""; $app.append(page);
+  }
+
+  // ---------- 路由 ----------
+  function route() {
+    const parts = (location.hash.replace(/^#\/?/, "") || "").split("/").filter(Boolean).map(decodeURIComponent);
+    if (!T && !sid()) { shell(null, null, h("p", null, "請先輸入學生代碼。")); askSid(); return; }
+    if (parts[0] !== "u") return pageHome();
+    const u = unitById(parts[1]); if (!u) return pageHome();
+    const p = parts[2];
+    if (!p) return pageUnit(u);
+    if (p === "lesson") return pageLesson(u, +parts[3]);
+    if (p === "test") return pageTest(u, parts[3]);
+    if (p === "extension") return pageExtension(u);
+    if (p === "assets") return pageAssets(u);
+    if (p === "print") return parts[3] ? pagePrint(u, +parts[3], parts[4]) : pagePrintIndex(u);
+    if (T && p === "design") return pageDesign(u);
+    if (T && p === "blueprint") return pageBlueprint(u);
+    if (T && p === "misconceptions") return pageMis(u);
+    if (T && p === "grade") return pageGrade(u);
+    pageUnit(u);
+  }
+  TB.units.forEach(u => { u.assets.byId = Object.fromEntries(u.assets.assets.map(a => [a.id, a])); });
+  window.addEventListener("hashchange", route);
+  route();
+})();
+</script>
+</body></html>

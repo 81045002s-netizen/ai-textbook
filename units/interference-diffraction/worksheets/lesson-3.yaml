@@ -1,0 +1,13 @@
+# 第3節學習單：03 只示範第2節，第3節完整題目待補。
+# 題號與作答任務照 02_單元教案與教學指引_示範版.docx 第3節原文（plan_ref）。
+lesson: 3
+pending: true
+questions:
+  - id: R2
+    label: "修訂第2節Q6"
+    revise_of: {lesson: 2, q: Q6}
+    plan_ref: "修訂第2節Q6，補上證據或推理。"
+  - {id: Q1, label: "Q1", plan_ref: "完成Q1；口頭比較單、雙狹縫。", parts: [{id: x, type: text, lines: 4}]}
+  - {id: Q3, label: "Q3", plan_ref: "Q3指出上下表面的反射光及干涉。", parts: [{id: x, type: text, lines: 3}]}
+  - {id: Q5a, label: "Q5①", plan_ref: "Q5①連結觀察、次波疊加與波動性。", parts: [{id: x, type: text, lines: 5}]}
+  - {id: Q5b, label: "Q5②", plan_ref: "Q5②寫前後想法；下載完整紀錄。", parts: [{id: x, type: text, lines: 4}]}
